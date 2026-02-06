@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "format:check": "npx prettier --check \"./src/**/*.{ts,tsx}\"",
+    "format:fix": "npx prettier --write \"./src/**/*.{ts,tsx}\"",
     "lint": "eslint"
   },
   "dependencies": {
@@ -21,6 +23,8 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "eslint-config-prettier": "10.1.8",
+    "prettier": "3.8.1",
     "typescript": "^5"
   }
 }
