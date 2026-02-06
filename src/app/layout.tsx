@@ -2,6 +2,14 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins, Roboto } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
+import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
+import "@mantine/notifications/styles.css";
+import "@mantine/charts/styles.css";
+import "@mantine/tiptap/styles.css";
+import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
+import Providers from "@/lib/ui/components/providers/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,8 +52,16 @@ export default function RootLayout({
   );
 
   return (
-    <html lang="en" className={htmlClassNames}>
-      <body>{children}</body>
+    <html lang="en" className={htmlClassNames} {...mantineHtmlProps}>
+      <head>
+        <ColorSchemeScript />
+      </head>
+      <body>
+        <Providers>
+          {children}
+          <Notifications autoClose={3000} />
+        </Providers>
+      </body>
     </html>
   );
 }
