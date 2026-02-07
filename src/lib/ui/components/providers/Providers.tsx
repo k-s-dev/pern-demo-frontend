@@ -1,3 +1,5 @@
+"use client";
+
 import { MantineProvider } from "@mantine/core";
 import { mantineTheme } from "../../mantine.theme";
 
