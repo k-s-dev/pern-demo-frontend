@@ -8,7 +8,9 @@
     "start": "next start",
     "format:check": "npx prettier --check \"./src/**/*.{ts,tsx}\"",
     "format:fix": "npx prettier --write \"./src/**/*.{ts,tsx}\"",
-    "lint": "eslint",
+    "lint:eslint": "eslint",
+    "lint:tsc": "npx tsc --noEmit",
+    "lint": "npm run lint:eslint && npm run lint:tsc",
     "test:jest": "jest",
     "test:cypress:open": "cypress open",
     "test:cypress:run": "cypress run"
