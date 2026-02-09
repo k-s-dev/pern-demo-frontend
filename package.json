@@ -33,6 +33,7 @@
     "@tiptap/react": "^3.19.0",
     "@tiptap/starter-kit": "^3.19.0",
     "@vercel/blob": "^2.2.0",
+    "better-auth": "^1.4.18",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
     "decode-formdata": "^0.9.0",

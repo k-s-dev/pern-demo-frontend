@@ -4,6 +4,7 @@ import AppShell from "@/lib/ui/components/layout/01/AppShell";
 import styles from "./page.module.scss";
 import { Button, Text } from "@mantine/core";
 import Link from "next/link";
+import SignIn from "./SignIn";
 
 export default async function Page() {
   // TODO: setup Navbar after auth
@@ -13,6 +14,8 @@ export default async function Page() {
         <header className={styles.mainHeader}>
           <h1>Nextjs Express App</h1>
         </header>
+
+        <SignIn />
 
         <section className={styles.stackAndFeaturesContainer}>
           <h2>Features</h2>
