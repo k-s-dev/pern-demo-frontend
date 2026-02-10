@@ -17,7 +17,7 @@ const blue: MantineColorsTuple = [
   "#376ad1",
   "#2959ba",
   "#204fa7",
-  "#104495"
+  "#104495",
 ];
 
 const indigo: MantineColorsTuple = [
@@ -56,8 +56,8 @@ const pink: MantineColorsTuple = [
   "#e82f20",
   "#cf2114",
   "#b91a0f",
-  "#a20d09"
-]
+  "#a20d09",
+];
 
 const red: MantineColorsTuple = [
   "#ffeced",
@@ -69,8 +69,8 @@ const red: MantineColorsTuple = [
   "#bd4b4e",
   "#a73c3f",
   "#963337",
-  "#85292d"
-]
+  "#85292d",
+];
 
 const orange: MantineColorsTuple = [
   "#fff2e3",
@@ -82,8 +82,8 @@ const orange: MantineColorsTuple = [
   "#ef7819",
   "#d5660c",
   "#be5906",
-  "#a64b00"
-]
+  "#a64b00",
+];
 
 const yellow: MantineColorsTuple = [
   "#fff8e4",
@@ -95,8 +95,8 @@ const yellow: MantineColorsTuple = [
   "#dfaa29",
   "#c6951b",
   "#b08412",
-  "#997101"
-]
+  "#997101",
+];
 
 const green: MantineColorsTuple = [
   "#f4fae8",
@@ -108,8 +108,8 @@ const green: MantineColorsTuple = [
   "#94b057",
   "#7f9b46",
   "#708a3b",
-  "#5f772e"
-]
+  "#5f772e",
+];
 
 const teal: MantineColorsTuple = [
   "#e4fcf7",
@@ -121,8 +121,8 @@ const teal: MantineColorsTuple = [
   "#53b39f",
   "#419d8b",
   "#348c7b",
-  "#1e7a69"
-]
+  "#1e7a69",
+];
 
 const cyan: MantineColorsTuple = [
   "#dffeff",
@@ -134,8 +134,8 @@ const cyan: MantineColorsTuple = [
   "#0dcaf0",
   "#00b5d8",
   "#00a2c2",
-  "#008cab"
-]
+  "#008cab",
+];
 
 const themeOverride = createTheme({
   autoContrast: true,

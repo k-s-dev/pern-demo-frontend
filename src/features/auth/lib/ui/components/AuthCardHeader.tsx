@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { PiShieldCheck } from "react-icons/pi";
 import { Divider, Flex, Text } from "@mantine/core";
-import { routes } from "@/app/routes";
+import { routes } from "@/lib/routes";
 
 export default function AuthCardHeader({
   subTitle = "Create an account",

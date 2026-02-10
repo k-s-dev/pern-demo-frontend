@@ -22,7 +22,7 @@ export class AppError extends Error {
     this.log = {
       message: args.log?.message || args.message,
       data: JSON.stringify(args.log?.data),
-    }
+    };
   }
 }
 

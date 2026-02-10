@@ -44,12 +44,7 @@ export function RichTextInput({
 
   return (
     <>
-      <TextInput
-        display="none"
-        readOnly
-        value={value}
-        {...textInputProps}
-      />
+      <TextInput display="none" readOnly value={value} {...textInputProps} />
       <RichTextEditor editor={editor}>
         <RichTextEditor.Toolbar sticky>
           <RichTextEditor.ControlsGroup>

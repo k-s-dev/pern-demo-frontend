@@ -19,7 +19,7 @@ export async function signInActionClient(
   prevState: TUserFormState | null,
   formData: FormData,
 ): Promise<TUserFormState> {
-  setActionName(actionName)
+  setActionName(actionName);
   const parsedFormData = parseFormData({ formData });
 
   const validationResult = v.safeParse(validationSchema, parsedFormData);

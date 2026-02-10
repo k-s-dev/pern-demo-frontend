@@ -20,11 +20,7 @@ export const routes = {
    * Public routes: do not need authentication.
    */
   get public() {
-    return [
-      this.generic.home,
-      this.auth.resetPassword,
-      this.auth.verifyEmail,
-    ];
+    return [this.generic.home, this.auth.resetPassword, this.auth.verifyEmail];
   },
 
   DEFAULT_LOGIN_REDIRECT: "/",

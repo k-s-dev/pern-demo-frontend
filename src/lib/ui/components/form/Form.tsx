@@ -2,10 +2,7 @@ import styles from "./Form.module.scss";
 
 export default function Form({ children, ...formProps }: FormProps) {
   return (
-    <form
-      className={styles.form}
-      {...formProps}
-    >
+    <form className={styles.form} {...formProps}>
       {children}
     </form>
   );

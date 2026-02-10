@@ -10,7 +10,10 @@ import { signInActionClient } from "./action/client";
 import { credentialsSignInActionServer } from "./action/server/signIn";
 import { sendVerificationLinkActionServer } from "./action/server/sendVerficationLink";
 import { VSSignInForm, VSSignInFormBase } from "./definitions";
-import { UserEmail, UserPassword } from "@/lib/dataModels/auth/user/lib/ui/Fields";
+import {
+  UserEmail,
+  UserPassword,
+} from "@/lib/dataModels/auth/user/lib/ui/Fields";
 import Form from "@/lib/ui/form/Form";
 import { Button } from "@mantine/core";
 import { sendResetPasswordLinkActionServer } from "./action/server/sendResetPasswordLink";

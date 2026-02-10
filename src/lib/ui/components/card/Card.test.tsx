@@ -10,4 +10,3 @@ describe("Page", () => {
     expect(text).toBeInTheDocument();
   });
 });
-

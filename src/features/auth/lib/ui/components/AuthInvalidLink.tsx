@@ -1,7 +1,7 @@
 import { Blockquote, Center, Text } from "@mantine/core";
 import { FaTriangleExclamation } from "react-icons/fa6";
 import AuthCard from "./AuthCard";
-import SignInLinkButton from "../features/signIn/SignInLinkButton";
+import SignInLinkButton from "@/features/auth/features/signIn/SignInLinkButton";
 
 export default function AuthInvalidLink({
   title,

@@ -17,7 +17,9 @@ export default function Layout03({ children }: { children: ReactNode }) {
       pb={"xl"}
       style={{ overflow: "auto" }}
     >
-      <Flex direction={"column"} mb={"50px"} pb={"50px"}>{children}</Flex>
+      <Flex direction={"column"} mb={"50px"} pb={"50px"}>
+        {children}
+      </Flex>
     </Container>
   );
 }

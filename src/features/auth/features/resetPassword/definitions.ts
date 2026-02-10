@@ -3,10 +3,7 @@ import * as v from "valibot";
 
 export const VSResetPasswordForm = v.pipe(
   v.required(
-    v.pick(VSUserBase, [
-      "password",
-      "confirmPassword",
-    ]),
+    v.pick(VSUserBase, ["password", "confirmPassword"]),
     ["password", "confirmPassword"],
     "Required.",
   ),
@@ -19,4 +16,3 @@ export const VSResetPasswordForm = v.pipe(
     ["confirmPassword"],
   ),
 );
-

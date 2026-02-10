@@ -3,12 +3,7 @@ import * as v from "valibot";
 
 export const VSSignUpForm = v.pipe(
   v.required(
-    v.pick(VSUserBase, [
-      "email",
-      "password",
-      "confirmPassword",
-      "name",
-    ]),
+    v.pick(VSUserBase, ["email", "password", "confirmPassword", "name"]),
     ["name", "email", "password", "confirmPassword"],
     "Required.",
   ),
