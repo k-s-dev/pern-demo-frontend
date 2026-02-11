@@ -23,8 +23,8 @@ export const routes = {
     return [this.generic.home, this.auth.resetPassword, this.auth.verifyEmail];
   },
 
-  DEFAULT_LOGIN_REDIRECT: "/",
-  DEFAULT_LOGOUT_REDIRECT: "/",
+  DEFAULT_SIGNIN_REDIRECT: "/",
+  DEFAULT_SIGNOUT_REDIRECT: "/",
 };
 
 export type TRouteSuffix = "detail" | "update" | "delete" | string;

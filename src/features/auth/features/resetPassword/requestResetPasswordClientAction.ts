@@ -1,8 +1,8 @@
 "use client";
 
 import { notifications } from "@mantine/notifications";
-import { authClient } from "../../auth-client";
-import { routes } from "@/lib/utils/routeMapper";
+import { authClient } from "../../lib/auth.client";
+import { routes } from "@/lib/routes";
 
 export async function requestResetPasswordClientAction() {
   const { data: session, error } = await authClient.getSession();
@@ -17,7 +17,7 @@ export async function requestResetPasswordClientAction() {
   if (session?.user.email) {
     const { data, error } = await authClient.requestPasswordReset({
       email: session.user.email,
-      redirectTo: routes.authentication.resetPassword,
+      redirectTo: routes.auth.resetPassword,
     });
     if (data?.status) {
       notifications.show({

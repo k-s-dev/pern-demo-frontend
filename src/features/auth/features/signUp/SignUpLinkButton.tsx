@@ -1,5 +1,5 @@
-import { routes } from "@/lib/utils/routeMapper";
-import LinkButton from "@/lib/ui/LinkButton";
+import { routes } from "@/lib/routes";
+import LinkButton from "@/lib/ui/components/LinkButton";
 import { ButtonProps } from "@mantine/core";
 
 export default function SignUpLinkButton({
@@ -8,7 +8,7 @@ export default function SignUpLinkButton({
 }: TProps) {
   return (
     <LinkButton
-      href={routes.authentication.signUp}
+      href={routes.auth.signUp}
       color="blue.1"
       {...restProps}
     >

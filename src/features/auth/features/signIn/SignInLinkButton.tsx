@@ -1,4 +1,4 @@
-import { routes } from "@/app/routes";
+import { routes } from "@/lib/routes";
 import LinkButton from "@/lib/ui/components/LinkButton";
 import { ButtonProps } from "@mantine/core";
 
