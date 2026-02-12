@@ -1,5 +1,3 @@
-"use server";
-
 import AppShell from "@/lib/ui/components/layout/01/AppShell";
 import styles from "./page.module.scss";
 import { Button, Text } from "@mantine/core";

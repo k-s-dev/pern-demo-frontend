@@ -10,7 +10,6 @@ import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import Script from "next/script";
 import Providers from "@/lib/ui/components/providers/Providers";
-import { poppins, roboto } from "@/lib/ui/fonts";
 
 export const metadata: Metadata = {
   title: "NextjsDemo",
@@ -23,12 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      data-theme=""
-      className={`${poppins.className} ${roboto.className}`}
-      {...mantineHtmlProps}
-    >
+    <html lang="en" data-theme="" {...mantineHtmlProps}>
       <head>
         <Suspense>
           <Script strategy="beforeInteractive" src="/js/setThemeScript.js" />

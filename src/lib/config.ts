@@ -4,12 +4,13 @@
  */
 
 import { APP_REQUIRED_ENV_VARIABLES } from "./constants";
+import { EnvError } from "./definitions/errors";
 
 APP_REQUIRED_ENV_VARIABLES.forEach((variable) => {
   const value = process.env[variable];
   if (!value || value === "") {
     console.log(`Environment variable missing: ${variable}`);
-    throw new Error();
+    throw new EnvError({});
   }
 });
 
