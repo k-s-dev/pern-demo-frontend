@@ -15,7 +15,7 @@
     "test:jest": "jest",
     "test:cypress:open": "cypress open",
     "test:cypress:run": "cypress run",
-    "update:definitions": "rm -rf src/lib/definitions/backend && cp -ruf ~/learn/dev/web/node/2026-01/express/05/backend/src/modules/nextDemo/lib/definitions/. src/lib/definitions/backend"
+    "update:definitions": "tsx --no-warnings ./ops/updateDefinitions.js"
   },
   "dependencies": {
     "@mantine/charts": "^8.3.14",
