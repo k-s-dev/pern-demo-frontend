@@ -16,6 +16,7 @@ APP_REQUIRED_ENV_VARIABLES.forEach((variable) => {
 
 export const appConfig = {
   nodeEnv: process.env.NODE_ENV || "development",
+  name: process.env.APP_NAME as string,
   api: {
     url: {
       base: process.env.API_URL as string,
