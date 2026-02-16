@@ -10,22 +10,16 @@ export default async function Page({
   const token = (await searchParams).token;
 
   if (!token || typeof token !== "string") {
-    return <InvalidLink />;
+    return (
+      <AuthInvalidLink title="Reset Password">
+        Invalid link. Reset password link can be generated from Sign In page.
+      </AuthInvalidLink>
+    );
   }
 
   return (
-    <div>
-      <ResetPasswordCard>
-        <ResetPasswordForm token={token} />
-      </ResetPasswordCard>
-    </div>
-  );
-}
-
-function InvalidLink() {
-  return (
-    <AuthInvalidLink title="Reset Password">
-      Invalid link. Reset password link can be generated from Sign In page.
-    </AuthInvalidLink>
+    <ResetPasswordCard>
+      <ResetPasswordForm token={token} />
+    </ResetPasswordCard>
   );
 }
