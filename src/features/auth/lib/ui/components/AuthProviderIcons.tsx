@@ -4,6 +4,7 @@ import { FaGithub, FaGoogle } from "react-icons/fa6";
 import { Button, Flex } from "@mantine/core";
 import { SocialProvider } from "better-auth/social-providers";
 import { authClient } from "../../auth.client";
+import { routes } from "@/lib/routes";
 
 export default function AuthProviderIcons() {
   return (
@@ -37,8 +38,10 @@ export function ProviderForm({
     <Button
       type="button"
       onClick={async () => {
+        const origin = window.location.origin;
         await authClient.signIn.social({
           provider: oAuthProvider,
+          callbackURL: origin + routes.DEFAULT_SIGNIN_REDIRECT,
         });
       }}
       fz={24}

@@ -7,11 +7,7 @@ export default function SignUpLinkButton({
   ...restProps
 }: TProps) {
   return (
-    <LinkButton
-      href={routes.auth.signUp}
-      color="blue.1"
-      {...restProps}
-    >
+    <LinkButton href={routes.auth.signUp} color="blue.1" {...restProps}>
       {title}
     </LinkButton>
   );

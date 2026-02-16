@@ -10,10 +10,10 @@ import {
 import { SelectSingle } from "@/lib/ui/components/form/fields/SelectSingle";
 import { Checkbox, SelectProps } from "@mantine/core";
 import { InputDateTimeProps } from "@/lib/ui/components/form/fields/InputDateTime";
-import { DynamicFormStateForFields } from "@/lib/definitions/form";
+import { TDynamicFormStateForFields } from "@/lib/definitions/form";
 
 export function UserEmail<
-  GFormState extends DynamicFormStateForFields<"email">,
+  GFormState extends TDynamicFormStateForFields<"email">,
 >({ formId, formState, ...props }: UserTextFieldProps<GFormState>) {
   return (
     <InputText
@@ -30,11 +30,9 @@ export function UserEmail<
   );
 }
 
-export function UserName<GFormState extends DynamicFormStateForFields<"name">>({
-  formId,
-  formState,
-  ...props
-}: UserTextFieldProps<GFormState>) {
+export function UserName<
+  GFormState extends TDynamicFormStateForFields<"name">,
+>({ formId, formState, ...props }: UserTextFieldProps<GFormState>) {
   return (
     <InputText
       formId={formId}
@@ -50,7 +48,7 @@ export function UserName<GFormState extends DynamicFormStateForFields<"name">>({
 }
 
 export function UserPassword<
-  GFormState extends DynamicFormStateForFields<"password">,
+  GFormState extends TDynamicFormStateForFields<"password">,
 >({ formId, formState, ...props }: UserPasswordFieldProps<GFormState>) {
   return (
     <InputPassword
@@ -67,7 +65,7 @@ export function UserPassword<
 }
 
 export function UserConfirmPassword<
-  GFormState extends DynamicFormStateForFields<"confirmPassword">,
+  GFormState extends TDynamicFormStateForFields<"confirmPassword">,
 >({ formId, formState, ...props }: UserPasswordFieldProps<GFormState>) {
   return (
     <InputPassword
@@ -84,7 +82,7 @@ export function UserConfirmPassword<
 }
 
 export function UserRole<
-  GFormState extends DynamicFormStateForFields<"role", USER_ROLE>,
+  GFormState extends TDynamicFormStateForFields<"role", USER_ROLE>,
 >({ formId, formState, ...props }: UserFieldRoleProps<GFormState>) {
   /**
    * Separate node for rendering disabled field is needed
@@ -120,7 +118,7 @@ export function UserRole<
 }
 
 export function UserEmailVerified<
-  GFormState extends DynamicFormStateForFields<"emailVerified", boolean>,
+  GFormState extends TDynamicFormStateForFields<"emailVerified", boolean>,
 >({ formId, formState, ...props }: UserFieldProps<GFormState>) {
   return (
     <Checkbox

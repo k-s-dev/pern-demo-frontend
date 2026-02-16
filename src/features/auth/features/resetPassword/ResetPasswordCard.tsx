@@ -1,4 +1,4 @@
-import AuthCard from "../../components/AuthCard";
+import AuthCard from "../../lib/ui/components/AuthCard";
 import SignInLinkButton from "../signIn/SignInLinkButton";
 
 export default function ResetPasswordCard({

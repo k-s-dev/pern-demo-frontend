@@ -1,9 +1,9 @@
 import { Text } from "@mantine/core";
-import AuthProviderIcons from "../../components/AuthProviderIcons";
 import { Divider } from "@mantine/core";
 import SignUpForm from "./form/Form";
 import SignInLinkButton from "../signIn/SignInLinkButton";
-import AuthCard from "../../components/AuthCard";
+import AuthCard from "../../lib/ui/components/AuthCard";
+import AuthProviderIcons from "../../lib/ui/components/AuthProviderIcons";
 
 export default function SignUpCard() {
   return (

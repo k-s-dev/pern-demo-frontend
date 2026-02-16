@@ -1,9 +1,10 @@
-import { VSUserBase } from "@/lib/dataModels/auth/user/definitions";
+import { SUserFull } from "@/lib/definitions/backend/auth/user";
+import { TFormState } from "@/lib/definitions/form";
 import * as v from "valibot";
 
-export const VSResetPasswordForm = v.pipe(
+export const SResetPasswordForm = v.pipe(
   v.required(
-    v.pick(VSUserBase, ["password", "confirmPassword"]),
+    v.pick(SUserFull, ["password", "confirmPassword"]),
     ["password", "confirmPassword"],
     "Required.",
   ),
@@ -16,3 +17,14 @@ export const VSResetPasswordForm = v.pipe(
     ["confirmPassword"],
   ),
 );
+
+export type TResetPasswordFormStateData = v.InferInput<
+  typeof SResetPasswordForm
+>;
+export type TResetPasswordFormStateErrors = v.FlatErrors<
+  typeof SResetPasswordForm
+>;
+export type TResetPasswordFormState = TFormState<
+  TResetPasswordFormStateData,
+  TResetPasswordFormStateErrors
+>;

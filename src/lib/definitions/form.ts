@@ -24,9 +24,15 @@ export function UserEmail<
 }
 ```
  */
-export type DynamicFormStateForFields<K extends PropertyKey, V = string> = {
+export type TDynamicFormStateForFields<K extends PropertyKey, V = string> = {
   data?: { [P in K]?: V };
   errors?: { nested?: { [P in K]?: string[] } };
 };
 
-
+export type TFormState<GData, GErrors> = {
+  status?: "success" | "error";
+  data?: GData;
+  errors?: GErrors;
+  messages?: string[];
+  touched?: boolean;
+};

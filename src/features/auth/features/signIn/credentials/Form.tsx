@@ -2,22 +2,15 @@
 
 import { useActionState, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import {
-  TSignInFormAction,
-  TUserFormState,
-} from "@/lib/dataModels/auth/user/definitions";
-import { signInActionClient } from "./action/client";
-import { credentialsSignInActionServer } from "./action/server/signIn";
-import { sendVerificationLinkActionServer } from "./action/server/sendVerficationLink";
-import { VSSignInForm, VSSignInFormBase } from "./definitions";
+import { Button } from "@mantine/core";
+import { TSignInFormAction, TSignInFormState } from "./definitions";
+import Form from "@/lib/ui/components/form/Form";
+import FormMessages from "@/lib/ui/components/form/FormMessages";
 import {
   UserEmail,
   UserPassword,
-} from "@/lib/dataModels/auth/user/lib/ui/Fields";
-import Form from "@/lib/ui/form/Form";
-import { Button } from "@mantine/core";
-import { sendResetPasswordLinkActionServer } from "./action/server/sendResetPasswordLink";
-import FormMessages from "@/lib/ui/form/FormMessages";
+} from "@/features/auth/lib/ui/components/Fields";
+import { signInActionClient } from "./client.action";
 
 export default function CredentialsSignInForm({
   initialState,
@@ -28,24 +21,12 @@ export default function CredentialsSignInForm({
   const [actionName, setActionName] = useState<TSignInFormAction | null>(null);
 
   const [signInFormState, signInAction, isPendingSignIn] = useActionState(
-    signInActionClient.bind(
-      null,
-      credentialsSignInActionServer,
-      VSSignInForm,
-      "signIn",
-      setActionName,
-    ),
+    signInActionClient.bind(null, "signIn", setActionName),
     { ...initialState, action: "signIn" },
   );
 
   const [resetFormState, resetPasswordAction, isPendingReset] = useActionState(
-    signInActionClient.bind(
-      null,
-      sendResetPasswordLinkActionServer,
-      VSSignInFormBase,
-      "reset",
-      setActionName,
-    ),
+    signInActionClient.bind(null, "reset", setActionName),
     { ...initialState, action: "reset" },
   );
 
@@ -53,16 +34,10 @@ export default function CredentialsSignInForm({
     verificationFormState,
     sendVerificationEmailFormAction,
     isPendingVerification,
-  ] = useActionState(
-    signInActionClient.bind(
-      null,
-      sendVerificationLinkActionServer,
-      VSSignInFormBase,
-      "verify",
-      setActionName,
-    ),
-    { ...initialState, action: "verify" },
-  );
+  ] = useActionState(signInActionClient.bind(null, "verify", setActionName), {
+    ...initialState,
+    action: "verify",
+  });
 
   const knownErrors: string[] = [];
   if (searchParams.get("error") === "OAuthAccountNotLinked") {
@@ -70,7 +45,7 @@ export default function CredentialsSignInForm({
     knownErrors.push(`Use the initial provier used to sign in.`);
   }
 
-  let formState: TUserFormState = initialState;
+  let formState: TSignInFormState = initialState;
   if (signInFormState.touched && actionName === "signIn")
     formState = signInFormState;
   if (resetFormState.touched && actionName === "reset")
@@ -133,11 +108,7 @@ export default function CredentialsSignInForm({
           fullWidth
           variant="light"
           color="gray"
-          onClick={() => {
-            resetAction();
-            // setActionName(null);
-            // setInitialState({ data: {} as TUserFormStateData, touched: false });
-          }}
+          onClick={() => resetAction()}
         >
           Reset
         </Button>
@@ -151,7 +122,7 @@ export default function CredentialsSignInForm({
 }
 
 export interface CredentialsSigninProps {
-  initialState: TUserFormState;
+  initialState: TSignInFormState;
   resetAction: () => void;
   formId?: string;
 }

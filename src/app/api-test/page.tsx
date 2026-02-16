@@ -1,12 +1,14 @@
 import AppShell from "@/lib/ui/components/layout/01/AppShell";
 import styles from "./page.module.scss";
 import Navbar from "@/lib/ui/components/nav/Navbar";
-import { fetchBaseApiGet } from "@/lib/data/fetchConfig";
 import { Text } from "@mantine/core";
+import { betterAuthFetch } from "@/lib/data/betterFetchFactory";
+import { authEndpoints } from "@/features/auth/lib/authEndpoints";
+import { prepareHeaders } from "@/lib/data/utils";
 
 export default async function Page() {
-  const data = await fetchBaseApiGet({
-    endpoint: "/next-demo/api/auth/list-accounts",
+  const response = await betterAuthFetch(authEndpoints["/list-accounts"], {
+    headers: await prepareHeaders(),
   });
 
   return (
@@ -15,7 +17,7 @@ export default async function Page() {
         <header className={styles.mainHeader}>
           <h1>Api Test</h1>
         </header>
-        <Text size="md">{JSON.stringify(data)}</Text>
+        <Text size="md">{JSON.stringify(response)}</Text>
       </main>
     </AppShell>
   );

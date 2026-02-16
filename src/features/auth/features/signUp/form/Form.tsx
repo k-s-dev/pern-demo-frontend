@@ -3,34 +3,31 @@
 import styles from "./Form.module.scss";
 import { useActionState } from "react";
 import { useDisclosure } from "@mantine/hooks";
-import {
-  TUserFormState,
-  TUserFormStateData,
-} from "@/lib/dataModels/auth/user/definitions";
-import { signUpActionClient } from "./action/client";
+import { signUpClientAction } from "./client.action";
 import {
   UserConfirmPassword,
   UserEmail,
   UserName,
   UserPassword,
-} from "@/lib/dataModels/auth/user/lib/ui/Fields";
-import Form from "@/lib/ui/form/Form";
-import { Button } from "@mantine/core";
-import FormMessages from "@/lib/ui/form/FormMessages";
+} from "@/features/auth/lib/ui/components/Fields";
+import { Button, Text } from "@mantine/core";
+import { TSignUpFormState, TSignUpFormStateData } from "./definitions";
+import Form from "@/lib/ui/components/form/Form";
+import FormMessages from "@/lib/ui/components/form/FormMessages";
 
 export default function SignUpForm({
   formId = "signUp-form",
 }: SignUpFormProps) {
   const [visible, { toggle }] = useDisclosure(false);
 
-  const initialFormData = {} as TUserFormStateData;
+  const initialFormData = {} as TSignUpFormStateData;
 
-  const initialFormState: TUserFormState = {
+  const initialFormState: TSignUpFormState = {
     data: initialFormData,
   };
 
   const [formState, formAction, isPending] = useActionState(
-    signUpActionClient,
+    signUpClientAction,
     initialFormState,
   );
 
@@ -42,11 +39,15 @@ export default function SignUpForm({
         className={styles.successMessage}
         data-test-cy="signUp-success-message"
       >
-        <p>User created succuesfully.</p>
+        <p>User created successfully.</p>
         <p>
-          Verification link has been sent to email:{" "}
-          <span>{formState.data?.email}</span>
+          Verification link has been sent to email:
+          <br />
+          <Text component="span" fw={"bold"}>
+            {formState.data?.email}
+          </Text>
         </p>
+
         <p className={styles.verificationNotice}>
           Email verification is needed to be able to sign in using email and
           password.

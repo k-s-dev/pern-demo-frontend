@@ -3,19 +3,18 @@
 import { useActionState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import {
-  TUserFormState,
-  TUserFormStateData,
-} from "@/lib/dataModels/auth/user/definitions";
-import { resetPasswordClientAction } from "./action/client";
-import { resetPasswordServerAction } from "./action/server";
-import { VSResetPasswordForm } from "./definitions";
+  SResetPasswordForm,
+  TResetPasswordFormState,
+  TResetPasswordFormStateData,
+} from "./definitions";
+import { Button } from "@mantine/core";
+import Form from "@/lib/ui/components/form/Form";
 import {
   UserConfirmPassword,
   UserPassword,
-} from "@/lib/dataModels/auth/user/lib/ui/Fields";
-import Form from "@/lib/ui/form/Form";
-import { Button } from "@mantine/core";
-import FormMessages from "@/lib/ui/form/FormMessages";
+} from "../../lib/ui/components/Fields";
+import FormMessages from "@/lib/ui/components/form/FormMessages";
+import { resetPasswordClientAction } from "./client.action";
 
 export default function ResetPasswordForm({
   token,
@@ -23,19 +22,14 @@ export default function ResetPasswordForm({
 }: PropsFormResetPassword) {
   const [visible, { toggle }] = useDisclosure(false);
 
-  const initialFormData = {} as TUserFormStateData;
+  const initialFormData = {} as TResetPasswordFormStateData;
 
-  const initialFormState: TUserFormState = {
+  const initialFormState: TResetPasswordFormState = {
     data: initialFormData,
   };
 
   const [formState, formAction, isPending] = useActionState(
-    resetPasswordClientAction.bind(
-      null,
-      resetPasswordServerAction,
-      VSResetPasswordForm,
-      token,
-    ),
+    resetPasswordClientAction.bind(null, SResetPasswordForm, token),
     initialFormState,
   );
 

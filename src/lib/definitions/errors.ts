@@ -106,3 +106,5 @@ export interface IErrorConstructorArgs {
   cause?: Error | unknown;
   log?: ErrorLog;
 }
+
+export type TValibotMessage = [string, ...string[]];

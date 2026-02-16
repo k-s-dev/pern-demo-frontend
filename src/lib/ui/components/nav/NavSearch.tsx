@@ -1,8 +1,3 @@
 export default function NavSearch() {
-  return (
-    <div>
-      NavSearch
-    </div>
-  )
+  return <div>NavSearch</div>;
 }
-

@@ -9,7 +9,7 @@ export default function FormMessages({
 }: FormMessagesProps) {
   if (!messages || messages.length <= 0) return null;
 
-  const color = error ? "red" : "gray";
+  const color = error ? "red" : "blue";
 
   return (
     <>

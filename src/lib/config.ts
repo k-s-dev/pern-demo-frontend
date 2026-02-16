@@ -17,7 +17,10 @@ APP_REQUIRED_ENV_VARIABLES.forEach((variable) => {
 export const appConfig = {
   nodeEnv: process.env.NODE_ENV || "development",
   api: {
-    url: process.env.API_URL,
+    url: {
+      base: process.env.API_URL as string,
+      auth: process.env.NEXT_PUBLIC_BETTER_AUTH_BASE_URL as string,
+    },
   },
   upload: {
     method: process.env.UPLOAD_METHOD,
