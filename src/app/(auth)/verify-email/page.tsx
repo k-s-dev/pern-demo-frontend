@@ -1,4 +1,4 @@
-import { verifyEmailServerAction } from "@/features/auth/features/verifyEmail/serverAction";
+import { verifyEmail } from "@/features/auth/lib/server.actions";
 import AuthCard from "@/features/auth/lib/ui/components/AuthCard";
 import AuthInvalidLink from "@/features/auth/lib/ui/components/AuthInvalidLink";
 import { Text } from "@mantine/core";
@@ -21,7 +21,7 @@ export default async function Page({
     );
   }
 
-  const response = await verifyEmailServerAction(token);
+  const response = await verifyEmail(token);
 
   if (response.error) {
     return (

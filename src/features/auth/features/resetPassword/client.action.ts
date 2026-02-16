@@ -9,7 +9,7 @@ import {
   TResetPasswordFormStateData,
 } from "./definitions";
 import { authClient } from "@/features/auth/lib/auth.client";
-import { revokeSessionsServerAction } from "@/features/auth/lib/server.actions";
+import { revokeSessions } from "../../lib/api";
 
 export async function resetPasswordClientAction(
   validationSchema: typeof SResetPasswordForm,
@@ -45,7 +45,7 @@ export async function resetPasswordClientAction(
     };
   }
 
-  await revokeSessionsServerAction();
+  await revokeSessions();
   await authClient.signOut();
 
   return {

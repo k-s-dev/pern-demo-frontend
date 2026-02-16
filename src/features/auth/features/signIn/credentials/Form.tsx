@@ -2,7 +2,7 @@
 
 import { useActionState, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Button } from "@mantine/core";
+import { Button, Switch } from "@mantine/core";
 import { TSignInFormAction, TSignInFormState } from "./definitions";
 import Form from "@/lib/ui/components/form/Form";
 import FormMessages from "@/lib/ui/components/form/FormMessages";
@@ -10,7 +10,7 @@ import {
   UserEmail,
   UserPassword,
 } from "@/features/auth/lib/ui/components/Fields";
-import { signInActionClient } from "./client.action";
+import { emailSignInFormClientAction } from "./client.action";
 
 export default function CredentialsSignInForm({
   initialState,
@@ -21,12 +21,12 @@ export default function CredentialsSignInForm({
   const [actionName, setActionName] = useState<TSignInFormAction | null>(null);
 
   const [signInFormState, signInAction, isPendingSignIn] = useActionState(
-    signInActionClient.bind(null, "signIn", setActionName),
+    emailSignInFormClientAction.bind(null, "signIn", setActionName),
     { ...initialState, action: "signIn" },
   );
 
   const [resetFormState, resetPasswordAction, isPendingReset] = useActionState(
-    signInActionClient.bind(null, "reset", setActionName),
+    emailSignInFormClientAction.bind(null, "reset", setActionName),
     { ...initialState, action: "reset" },
   );
 
@@ -34,10 +34,13 @@ export default function CredentialsSignInForm({
     verificationFormState,
     sendVerificationEmailFormAction,
     isPendingVerification,
-  ] = useActionState(signInActionClient.bind(null, "verify", setActionName), {
-    ...initialState,
-    action: "verify",
-  });
+  ] = useActionState(
+    emailSignInFormClientAction.bind(null, "verify", setActionName),
+    {
+      ...initialState,
+      action: "verify",
+    },
+  );
 
   const knownErrors: string[] = [];
   if (searchParams.get("error") === "OAuthAccountNotLinked") {
@@ -66,6 +69,12 @@ export default function CredentialsSignInForm({
           formState={formState}
           required
           data-test-cy="signIn-password"
+        />
+        <Switch
+          defaultChecked={formState.data?.rememberMe || false}
+          error={formState.errors?.nested?.rememberMe}
+          name="rememberMe"
+          label="Remember me"
         />
 
         <Button

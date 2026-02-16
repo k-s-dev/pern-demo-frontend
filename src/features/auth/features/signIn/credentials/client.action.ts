@@ -15,14 +15,18 @@ import { authClient } from "@/features/auth/lib/auth.client";
 import { redirect } from "next/navigation";
 import { routes } from "@/lib/routes";
 
-export async function signInActionClient(
+export async function emailSignInFormClientAction(
   actionName: TSignInFormAction,
   setActionName: Dispatch<SetStateAction<TSignInFormAction | null>>,
   prevState: TSignInFormState | null,
   formData: FormData,
 ): Promise<TSignInFormState> {
   setActionName(actionName);
-  const parsedFormData = parseFormData({ formData });
+  const rawFormData = Object.fromEntries(formData);
+  const parsedFormData = parseFormData({
+    formData,
+    info: { booleans: ["rememberMe"] },
+  });
 
   if (actionName === "signIn") {
     const validationResult = v.safeParse(SSignInForm, parsedFormData);
@@ -32,7 +36,7 @@ export async function signInActionClient(
       return {
         ...prevState,
         status: "error",
-        data: parsedFormData as TSignInFormStateData,
+        data: rawFormData as unknown as TSignInFormStateData,
         errors: errors,
         action: actionName,
         touched: true,
@@ -42,13 +46,14 @@ export async function signInActionClient(
     const response = await authClient.signIn.email({
       email: validationResult.output.email,
       password: validationResult.output.password,
+      rememberMe: validationResult.output.rememberMe,
     });
 
     if (response.error) {
       return {
         ...prevState,
         status: "error",
-        data: parsedFormData as TSignInFormStateData,
+        data: rawFormData as unknown as TSignInFormStateData,
         errors: {
           root: [
             response.error.message ||
@@ -67,7 +72,7 @@ export async function signInActionClient(
       return {
         ...prevState,
         status: "error",
-        data: parsedFormData as TSignInFormStateData,
+        data: rawFormData as unknown as TSignInFormStateData,
         errors: errors,
         action: actionName,
         touched: true,
@@ -83,7 +88,7 @@ export async function signInActionClient(
         return {
           ...prevState,
           status: "error",
-          data: parsedFormData as TSignInFormStateData,
+          data: rawFormData as unknown as TSignInFormStateData,
           errors: {
             root: [response.error.message || "Internal server error."],
           },
@@ -110,7 +115,7 @@ export async function signInActionClient(
         return {
           ...prevState,
           status: "error",
-          data: parsedFormData as TSignInFormStateData,
+          data: rawFormData as unknown as TSignInFormStateData,
           errors: {
             root: [response.error.message || "Internal server error."],
           },
@@ -122,7 +127,7 @@ export async function signInActionClient(
       return {
         ...prevState,
         status: "success",
-        data: parsedFormData as TSignInFormStateData,
+        data: rawFormData as unknown as TSignInFormStateData,
         messages: [response.data.message],
         action: actionName,
         touched: true,

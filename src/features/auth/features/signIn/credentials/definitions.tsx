@@ -1,15 +1,12 @@
 import { SUserFull } from "@/lib/definitions/backend/auth/user";
 import * as v from "valibot";
 
-export const SSignInFormBase = v.required(
-  v.pick(SUserFull, ["email"]),
-  "Required",
-);
+export const SSignInFormBase = v.required(v.pick(SUserFull, ["email"]));
 
-export const SSignInForm = v.required(
-  v.pick(SUserFull, ["email", "password"]),
-  "Required.",
-);
+export const SSignInForm = v.object({
+  ...v.required(v.pick(SUserFull, ["email", "password"])).entries,
+  rememberMe: v.boolean(),
+});
 
 export type TSignInFormAction = "signIn" | "reset" | "verify";
 export type TSignInFormStateData = v.InferInput<typeof SSignInForm>;
