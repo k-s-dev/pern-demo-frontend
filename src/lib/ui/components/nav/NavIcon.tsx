@@ -1,8 +1,8 @@
 "use client";
 
+import { routes } from "@/lib/routes";
 import Link from "next/link";
 import { FaBullseye } from "react-icons/fa6";
-import { routes } from "@/lib/utils/routeMapper";
 
 export default function NavIcon() {
   return (

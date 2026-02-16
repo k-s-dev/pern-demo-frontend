@@ -10,15 +10,28 @@ export type TServerAction<TFormState> = (
 
 export type TDataRequestMode = "server" | "client";
 
-export type TServerResponseStatus = "error" | "success" | "pending";
+export type TServerResponseStatus = "error" | "success";
 
-export type TServerResponse<GData = undefined> = {
-  status: TServerResponseStatus;
-  data?: GData;
-  errors?: string[];
-  log?: unknown;
+type TServerResponseWithData<GData> = {
+  data: GData;
+  messages: string[];
+  error?: never;
 };
 
-export type TServerResponsePromise<GData = undefined> = Promise<
+type TServerResponseWithError = {
+  data?: never;
+  messages?: never;
+  error: {
+    messages: string[];
+    status?: number;
+    statusText?: string;
+  };
+};
+
+export type TServerResponse<GData = unknown> =
+  | TServerResponseWithData<GData>
+  | TServerResponseWithError;
+
+export type TServerResponsePromise<GData = unknown> = Promise<
   TServerResponse<GData>
 >;

@@ -46,8 +46,10 @@ export default function DeleteModalButton<GServerResponse = undefined>({
             } catch {
               setErrorMessages([defaultErrorMessage]);
             }
-            if (response?.errors) {
-              setErrorMessages(response.errors);
+            if (response?.error) {
+              setErrorMessages(
+                response.error.messages || [response.error.statusText],
+              );
             }
             close();
           }}

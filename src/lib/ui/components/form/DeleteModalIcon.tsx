@@ -39,8 +39,10 @@ export default function DeleteModalIcon<GDeleteResponse = undefined>({
             let response;
             try {
               response = await deleteAction();
-              if (response.errors) {
-                setErrorMessages(response.errors);
+              if (response.error) {
+                setErrorMessages(
+                  response.error.messages || response.error.statusText,
+                );
               } else {
                 close();
               }
