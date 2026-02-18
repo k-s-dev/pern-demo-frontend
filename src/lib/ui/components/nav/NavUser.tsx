@@ -7,7 +7,15 @@ import SignUpLinkButton from "@/features/auth/features/signUp/SignUpLinkButton";
 import { authClient } from "@/features/auth/lib/auth.client";
 import UserAvatar from "@/features/auth/lib/ui/components/UserAvatar";
 import { TSessionData } from "@/lib/definitions/backend/auth/generic";
-import { Flex, Menu, MenuDropdown, MenuItem, MenuTarget } from "@mantine/core";
+import { routes } from "@/lib/routes";
+import {
+  Flex,
+  Menu,
+  MenuDropdown,
+  MenuItem,
+  MenuTarget,
+} from "@mantine/core";
+import Link from "next/link";
 
 export default function NavUser() {
   const sessionCtx = authClient.useSession();
@@ -37,13 +45,8 @@ export function NavUserAvatar({ session }: { session: TSessionData }) {
           </div>
         </MenuTarget>
         <MenuDropdown mx="md">
-          <MenuItem
-            onClick={async () => {
-              await requestResetPasswordClientAction();
-            }}
-            fz="lg"
-          >
-            Reset Password
+          <MenuItem component={Link} href={routes.auth.profile} fz={"xl"}>
+            Profile
           </MenuItem>
           <MenuItem fz="lg" color="red">
             <SignOut>Sign Out</SignOut>

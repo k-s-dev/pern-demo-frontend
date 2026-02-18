@@ -6,3 +6,13 @@ export const APP_REQUIRED_ENV_VARIABLES = [
   "UPLOAD_METHOD",
   "VERCEL_BLOB_READ_WRITE_TOKEN",
 ];
+
+export const LIMIT = {
+  upload: {
+    image: {
+      value: 5,
+      unit: "MB",
+      label: "5 MB",
+    },
+  },
+};

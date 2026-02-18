@@ -43,12 +43,12 @@ export function NavLinksTitle() {
 
 export const navLinks: INavLink[] = [
   {
-    title: "Products",
-    href: "/product",
+    title: "Org",
+    href: "/org",
     links: [
       {
-        title: "All Products",
-        href: "/product/list",
+        title: "Tasks",
+        href: "/org/tasks",
       },
     ],
   },

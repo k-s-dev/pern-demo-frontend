@@ -14,16 +14,16 @@ export async function revokeSessions() {
   return response;
 }
 
-export async function verifyEmail(token: string) {
+export async function verifyEmail(query: { token: string }) {
   const response = betterAuthFetch(authEndpoints["/verify-email"], {
-    query: { token },
+    query,
     headers: await prepareHeaders(),
   });
 
   return response;
 }
 
-export async function signInEmail(data: {
+export async function signInEmail(body: {
   email: string;
   password: string;
   rememberMe: boolean;
@@ -31,7 +31,27 @@ export async function signInEmail(data: {
   const response = betterAuthFetch(authEndpoints["/sign-in/email"], {
     method: "POST",
     headers: await prepareHeaders(),
-    body: JSON.stringify(data),
+    body: JSON.stringify(body),
+  });
+
+  return response;
+}
+
+export async function requestPasswordReset(body: { email: string }) {
+  const response = betterAuthFetch(authEndpoints["/request-password-reset"], {
+    method: "POST",
+    headers: await prepareHeaders(),
+    body: JSON.stringify(body),
+  });
+
+  return response;
+}
+
+export async function deleteUser(body: { password: string; token: string }) {
+  const response = betterAuthFetch(authEndpoints["/sign-in/email"], {
+    method: "POST",
+    headers: await prepareHeaders(),
+    body: JSON.stringify(body),
   });
 
   return response;

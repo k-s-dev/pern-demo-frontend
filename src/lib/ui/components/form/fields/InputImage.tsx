@@ -4,7 +4,8 @@ import Image from "next/image";
 import FormControl from "../control/FormControl";
 import TooltipIcon from "../../icons/TooltipIcon";
 import { FaX } from "react-icons/fa6";
-import { Flex } from "@mantine/core";
+import { Flex, Text } from "@mantine/core";
+import { LIMIT } from "@/lib/constants";
 
 export function InputImage({
   formId,
@@ -52,14 +53,7 @@ export function InputImage({
     );
   } else {
     if (imageUrl) {
-      img = (
-        <Image
-          src={`${imageUrl}?q=${new Date()}`}
-          alt=""
-          className={styles.image}
-          fill
-        />
-      );
+      img = <Image src={imageUrl} alt="" className={styles.image} fill />;
     } else {
       img = <div></div>;
     }
@@ -92,6 +86,7 @@ export function InputImage({
               <FaX />
             </TooltipIcon>
           </Flex>
+          <Text>{LIMIT.upload.image.label}</Text>
           <input
             hidden
             form={formId}

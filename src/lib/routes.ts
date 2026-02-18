@@ -15,6 +15,7 @@ export const routes = {
     verifyEmailStatus: "/verify-email-status",
     resetPassword: "/reset-password",
     authError: "/error",
+    profile: "/profile",
   },
 
   /**

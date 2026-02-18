@@ -8,7 +8,7 @@ import {
   InputTextProps,
 } from "@/lib/ui/components/form/fields/InputText";
 import { SelectSingle } from "@/lib/ui/components/form/fields/SelectSingle";
-import { Checkbox, SelectProps } from "@mantine/core";
+import { Checkbox, CheckboxProps, SelectProps } from "@mantine/core";
 import { InputDateTimeProps } from "@/lib/ui/components/form/fields/InputDateTime";
 import { TDynamicFormStateForFields } from "@/lib/definitions/form";
 
@@ -119,7 +119,7 @@ export function UserRole<
 
 export function UserEmailVerified<
   GFormState extends TDynamicFormStateForFields<"emailVerified", boolean>,
->({ formId, formState, ...props }: UserFieldProps<GFormState>) {
+>({ formId, formState, ...props }: UserFieldProps<GFormState> & CheckboxProps) {
   return (
     <Checkbox
       form={formId}

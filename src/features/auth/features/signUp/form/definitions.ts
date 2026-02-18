@@ -6,7 +6,6 @@ export const SSignUpForm = v.pipe(
   v.required(
     v.pick(SUserFull, ["email", "password", "confirmPassword", "name"]),
     ["name", "email", "password", "confirmPassword"],
-    "Required.",
   ),
   v.forward(
     v.partialCheck(

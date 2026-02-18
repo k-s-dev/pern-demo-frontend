@@ -9,7 +9,7 @@ import AuthProviderIcons from "../../lib/ui/components/AuthProviderIcons";
 import { TSignInFormStateData } from "./credentials/definitions";
 
 export default function SignInCard({
-  subTitle = "Welcome back.",
+  subTitle = "Welcome back",
 }: {
   subTitle?: string;
 }) {
