@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, Flex } from "@mantine/core";
+import { Box } from "@mantine/core";
 import { ReactNode } from "react";
 
 /**
@@ -9,17 +9,8 @@ import { ReactNode } from "react";
  */
 export default function Layout03({ children }: { children: ReactNode }) {
   return (
-    <Container
-      w={{ base: "99%", sm: "75%" }}
-      m={"auto"}
-      mah={"100vh"}
-      mb={"xl"}
-      pb={"xl"}
-      style={{ overflow: "auto" }}
-    >
-      <Flex direction={"column"} mb={"50px"} pb={"50px"}>
-        {children}
-      </Flex>
-    </Container>
+    <Box h={"100%"} pb={"xl"} style={{ overflow: "auto" }}>
+      {children}
+    </Box>
   );
 }
