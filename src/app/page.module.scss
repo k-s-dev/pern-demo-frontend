@@ -39,6 +39,8 @@
   grid-template-columns: 1fr;
   justify-items: start;
 
+  max-width: 600px;
+
   overflow: auto;
 
   & h2 {
@@ -54,7 +56,7 @@
   width: 100%;
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
 
   @include media-phone {
     grid-template-columns: 1fr;
