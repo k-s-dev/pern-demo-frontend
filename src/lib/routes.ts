@@ -16,6 +16,7 @@ export const routes = {
     resetPassword: "/reset-password",
     authError: "/error",
     profile: "/profile",
+    apiTest: "/api-test"
   },
 
   /**

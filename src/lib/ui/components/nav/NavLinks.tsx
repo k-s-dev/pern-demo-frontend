@@ -43,6 +43,10 @@ export function NavLinksTitle() {
 
 export const navLinks: INavLink[] = [
   {
+    title: "API-Test",
+    href: routes.auth.apiTest,
+  },
+  {
     title: "Org",
     href: "/org",
     links: [
