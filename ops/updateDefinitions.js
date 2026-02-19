@@ -8,8 +8,7 @@ import * as fs from "node:fs";
 import { exit } from "node:process";
 
 // no trailing slashes or dots
-const SRC =
-  "/home/shunya/learn/dev/web/node/2026-01/express/05/backend/src/modules/nextDemo/lib/definitions";
+const SRC = "../backend/src/modules/nextDemo/lib/definitions";
 const DST = "./src/lib/definitions/backend";
 
 const src = SRC;
@@ -34,9 +33,10 @@ if (!fs.existsSync(src)) {
 // trailing dot is intentional
 const cmd = `rm -rf ${dst} && cp -rf ${src}/. ${dst}`;
 
-exec(cmd, (err, stdout, stderr) => {
+exec(cmd, (err, _stdout, stderr) => {
   if (err) console.log(`err: ${err}`);
   if (stderr) console.log(`stderr: ${stderr}`);
+  console.log("Update of definitions on frontend from backend completed.")
 });
 
 // get all files in definitions
