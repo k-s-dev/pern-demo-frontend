@@ -14,7 +14,6 @@ import { parseFormData } from "@/lib/utils/form";
 import { authClient } from "@/features/auth/lib/auth.client";
 import { redirect } from "next/navigation";
 import { routes } from "@/lib/routes";
-import { signInEmailServerAction } from "./server.action";
 
 export async function emailSignInFormClientAction(
   actionName: TSignInFormAction,
@@ -65,8 +64,6 @@ export async function emailSignInFormClientAction(
         touched: true,
       };
     }
-
-    await signInEmailServerAction();
   } else {
     const validationResult = v.safeParse(SSignInFormBase, parsedFormData);
 

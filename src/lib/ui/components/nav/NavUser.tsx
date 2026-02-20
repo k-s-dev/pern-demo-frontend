@@ -1,6 +1,5 @@
 "use client";
 
-import { requestResetPasswordClientAction } from "@/features/auth/features/resetPassword/requestResetPasswordClientAction";
 import SignInLinkButton from "@/features/auth/features/signIn/SignInLinkButton";
 import SignOut from "@/features/auth/features/signOut/SignOut";
 import SignUpLinkButton from "@/features/auth/features/signUp/SignUpLinkButton";
