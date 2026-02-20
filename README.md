@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PERN demo
 
-## Getting Started
+> **Postgresql** **Expressjs** **React** **Nodejs**
+>
+> A sample PERN stack project setup built with Nextjs app router and Typescript,
+> deployed on Vercel
+>
+> This is an extension of [Nextjs demo monorepo](https://github.com/k-s-dev/nextjs-demo).
 
-First, run the development server:
+- _Frontend_: **Next**/**React**
+  - [repo](https://github.com/k-s-dev/pern-demo-frontend)
+  - deployment
+    - [production](): main branch
+    - [preview](): dev branch
+- _Backend_: **Nodejs**/**Expressjs**
+  - [repo](https://github.com/k-s-dev/pern-demo-backend)
+  - deployment
+    - [production](): main branch
+    - [preview](): dev branch
+  - _db_: `postgresql`
+    - _production_: hosted on **Neon**
+    - _development & test_: local
+    - _orm_: **Prisma**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Typescript and validation checks on backend and frontend
+  - Frontend extends types and schemas from backend
+- Auth: implemented using `better-auth`
+  - sign in: email/password, OAuth
+  - verification emails
+  - sessions: token cookie based, verified on backend
+  - authorization (permissions): custom role based checks
+- Frontend
+  - Forms: validation both on client and server
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Workflow
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Pre build check list
 
-## Learn More
+#### Backend
 
-To learn more about Next.js, take a look at the following resources:
+- check env variables
+  - `env_samples/` folder is available in git repo
+  - if needed, create env samples: `npm run env:create:samples`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- setup db
+  - npm scripts for prisma cli commands are available
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `npm run check`
+  - runs all checks sequentially and stops at first error
+    - `npm run check:format && npm run check:lint && npm run check:types`
+  - rerun after resolving until all checks pass
+  - format errors can be fixed by **prettier**
+    - `npm run fix:format`
+  - lint and typescript errors are better fixed manually
 
-## Deploy on Vercel
+- run tests: **vitest**
+  - `npm run test`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+#### Frontend
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- backend dependencies
+  - sync types and validation schemas with backend
+    - `npm run update:definitions`
+  - check backend server is running
+
+- check env variables
+  - `env_samples/` folder is available in git repo
+  - if needed, create env samples: `npm run env:create:samples`
+
+- `npm run check`
+  - runs all checks sequentially and stops at first error
+    - `npm run check:format && npm run check:lint && npm run check:types`
+  - rerun after resolving until all checks pass
+  - format errors can be fixed by **prettier**
+    - `npm run fix:format`
+  - lint and typescript errors are better fixed manually
+
+- run tests
+  - start backend server with configured environment for db
+    - default: separate db for test environment
+    - make sure `env.test` points to the right backend instance
+  - component tests: **jest**
+    - `npm run test:jest`
+  - e2e tests: **cypress**
+    - `npm run test`: build and start the server using test env
+    - `npm run test:cypress:run` or `npm run test:cypress:open`
