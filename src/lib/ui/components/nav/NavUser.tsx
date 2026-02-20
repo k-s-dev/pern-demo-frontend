@@ -8,13 +8,7 @@ import { authClient } from "@/features/auth/lib/auth.client";
 import UserAvatar from "@/features/auth/lib/ui/components/UserAvatar";
 import { TSessionData } from "@/lib/definitions/backend/auth/generic";
 import { routes } from "@/lib/routes";
-import {
-  Flex,
-  Menu,
-  MenuDropdown,
-  MenuItem,
-  MenuTarget,
-} from "@mantine/core";
+import { Flex, Menu, MenuDropdown, MenuItem, MenuTarget } from "@mantine/core";
 import Link from "next/link";
 
 export default function NavUser() {

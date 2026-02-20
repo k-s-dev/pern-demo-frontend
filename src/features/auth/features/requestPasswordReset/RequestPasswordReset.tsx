@@ -15,8 +15,7 @@ export default function RequestPasswordReset({ user }: { user: TUser }) {
       });
     }
     notifications.show({
-      message:
-        "Link to reset password has been sent to the resigtered email.",
+      message: "Link to reset password has been sent to the resigtered email.",
       autoClose: false,
     });
   }
