@@ -25,6 +25,6 @@ export const appConfig = {
   },
   upload: {
     method: process.env.UPLOAD_METHOD,
-    vercelBlobKey: process.env.VERCEL_BLOB_READ_WRITE_TOKEN,
+    vercelBlobKey: process.env.BLOB_READ_WRITE_TOKEN,
   },
 };
