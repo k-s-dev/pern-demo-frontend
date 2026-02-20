@@ -18,5 +18,24 @@ export const authClient = createAuthClient({
         },
       },
     }),
+    {
+      // https://github.com/better-auth/better-auth/discussions/5336
+      id: "next-cookies-request",
+      fetchPlugins: [
+        {
+          id: "next-cookies-request-plugin",
+          name: "next-cookies-request-plugin",
+          hooks: {
+            async onRequest(ctx) {
+              if (typeof window === "undefined") {
+                const { cookies } = await import("next/headers");
+                const headers = await cookies();
+                ctx.headers.set("cookie", headers.toString());
+              }
+            },
+          },
+        },
+      ],
+    },
   ],
 });

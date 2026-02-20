@@ -17,11 +17,12 @@ APP_REQUIRED_ENV_VARIABLES.forEach((variable) => {
 export const appConfig = {
   nodeEnv: process.env.NODE_ENV || "development",
   name: process.env.APP_NAME as string,
+  betterAuth: {
+    basePath: process.env.BETTER_AUTH_BASE_PATH as string,
+    baseUrl: process.env.NEXT_PUBLIC_BETTER_AUTH_BASE_URL as string,
+  },
   api: {
-    url: {
-      base: process.env.API_URL as string,
-      auth: process.env.NEXT_PUBLIC_BETTER_AUTH_BASE_URL as string,
-    },
+    url: process.env.API_URL as string,
   },
   upload: {
     method: process.env.UPLOAD_METHOD,

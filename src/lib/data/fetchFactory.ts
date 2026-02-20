@@ -41,7 +41,7 @@ export async function customFetch(
   endpoint: string,
   options?: RequestInit,
   method: TFetchMethod = "GET",
-  baseUrl: string = appConfig.api.url.base,
+  baseUrl: string = appConfig.api.url,
 ) {
   const url = utils.prepareUrl(baseUrl, endpoint);
   const headers = await utils.prepareHeaders();
@@ -70,7 +70,12 @@ export async function authFetch(
   method: TFetchMethod = "GET",
   options?: RequestInit,
 ) {
-  return await customFetch(endpoint, options, method, appConfig.api.url.auth);
+  return await customFetch(
+    endpoint,
+    options,
+    method,
+    appConfig.betterAuth.baseUrl,
+  );
 }
 
 export type TCustomFetchArgs = {

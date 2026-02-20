@@ -4,6 +4,7 @@ export const APP_REQUIRED_ENV_VARIABLES = [
   "API_URL",
   "NEXT_PUBLIC_BETTER_AUTH_BASE_URL",
   "UPLOAD_METHOD",
+  "BETTER_AUTH_BASE_PATH",
 ];
 
 export const LIMIT = {
