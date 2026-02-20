@@ -64,7 +64,7 @@ function Item({ href, title }: { href: string; title: string }) {
       target={href.length === 0 ? "_self" : "_blank"}
       referrerPolicy="no-referrer"
     >
-      <Button fullWidth fz="md" fw="lighter" color="yellow.1">
+      <Button fullWidth fz="md" fw="normal" color="yellow.1">
         {title}
       </Button>
     </Link>
