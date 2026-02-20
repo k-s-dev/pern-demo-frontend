@@ -1,4 +1,4 @@
-"use strict";
+"use server";
 
 import { redirect } from "next/navigation";
 import { routes } from "@/lib/routes";

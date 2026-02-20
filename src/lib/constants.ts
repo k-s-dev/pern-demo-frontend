@@ -20,5 +20,5 @@ export const tags = {
   session: {
     tag: "session",
     profile: "max",
-  }
-}
+  },
+};
