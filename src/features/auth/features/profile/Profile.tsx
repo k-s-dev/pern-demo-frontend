@@ -6,6 +6,7 @@ import { TSessionData } from "@/lib/definitions/backend/auth/generic";
 import { Suspense } from "react";
 import { prepareHeaders } from "@/lib/data/utils";
 import RequestPasswordReset from "../requestPasswordReset/RequestPasswordReset";
+import { tags } from "@/lib/constants";
 
 export default async function Profile() {
   const sessionData = await betterAuthFetch<TSessionData>(
@@ -13,7 +14,7 @@ export default async function Profile() {
     {
       headers: await prepareHeaders(),
       next: {
-        tags: ["session"],
+        tags: [tags.session.tag],
       },
     },
   );

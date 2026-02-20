@@ -15,3 +15,10 @@ export const LIMIT = {
     },
   },
 };
+
+export const tags = {
+  session: {
+    tag: "session",
+    profile: "max",
+  }
+}
