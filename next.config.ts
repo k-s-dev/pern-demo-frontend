@@ -1,4 +1,3 @@
-import { appConfig } from "@/lib/config";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -17,14 +16,6 @@ const nextConfig: NextConfig = {
         hostname: "nvpljyvubavbnfdf.public.blob.vercel-storage.com",
       },
     ],
-  },
-  async rewrites() {
-    return [
-      {
-        source: `/api/auth/:path*`,
-        destination: `${appConfig.betterAuth.baseUrl}/:path*`,
-      },
-    ];
   },
 };
 
