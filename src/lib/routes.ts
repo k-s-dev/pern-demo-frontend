@@ -28,6 +28,13 @@ export const routes = {
 
   DEFAULT_SIGNIN_REDIRECT: "/",
   DEFAULT_SIGNOUT_REDIRECT: "/",
+
+  test: {
+    db: {
+      reset: "/api/test/db/reset",
+      seed: "/api/test/db/seed",
+    },
+  },
 };
 
 export type TRouteSuffix = "detail" | "update" | "delete" | string;

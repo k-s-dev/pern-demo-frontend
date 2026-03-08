@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@mantine/core";
+import { Button, Text } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { authClient } from "../../lib/auth.client";
 import { TSessionUser } from "@/lib/definitions/backend/auth/user";
@@ -19,7 +19,12 @@ export default function RequestPasswordReset({ user }: { user: TSessionUser }) {
       });
     }
     notifications.show({
-      message: "Link to reset password has been sent to the resigtered email.",
+      message: (
+        <Text>
+          Email verification is required to reset password.
+          If email is verified, link to reset password has been sent to the resigtered email.
+        </Text>
+      ),
       autoClose: false,
     });
   }

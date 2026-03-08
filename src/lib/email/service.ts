@@ -22,7 +22,7 @@ export async function sendMail(dataIn: {
     dataIn.from = `${appConfig.name} <${appConfig.email.id}>`;
   }
 
-  if (appConfig.nodeEnv === "production") {
+  if (appConfig.nodeEnv === "production" && !appConfig.isTest) {
     await transporter.sendMail(dataIn);
   } else {
     console.log(dataIn.html);

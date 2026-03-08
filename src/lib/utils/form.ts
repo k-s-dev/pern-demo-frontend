@@ -41,6 +41,9 @@ export function parseFormData(args: {
   return parsedFormData;
 }
 
-export function prepareValibotErrors(errors: string[]) {
+export function prepareValibotErrors(errors: string | string[]) {
+  if (typeof errors === "string") {
+    return [errors] as [string, ...string[]];
+  }
   return errors as [string, ...string[]];
 }

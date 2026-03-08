@@ -16,6 +16,7 @@ APP_REQUIRED_ENV_VARIABLES.forEach((variable) => {
 
 export const appConfig = {
   nodeEnv: process.env.NODE_ENV || "development",
+  isTest: process.env.IS_TEST === "yes",
   name: process.env.APP_NAME as string,
   auth: {
     baseURL: process.env.BETTER_AUTH_BASE_URL as string,

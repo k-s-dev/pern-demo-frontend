@@ -1,9 +1,27 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "lib": ["es6", "dom"],
+    "target": "ES2017",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "sourceMap": true,
-    "types": ["cypress", "node"]
+    "module": "esnext",
+    "types": [
+      "cypress",
+      "node"
+    ]
   },
-  "include": ["**/*.ts"]
+  "paths": {
+    "@/*": [
+      "../src/*"
+    ],
+    "#/*": [
+      "../*"
+    ]
+  },
+  "include": [
+    "../**/*.ts",
+    "**/*.ts"
+  ]
 }

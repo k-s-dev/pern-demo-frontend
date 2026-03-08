@@ -14,13 +14,12 @@ import { parseFormData, prepareValibotErrors } from "@/lib/utils/form";
 import { authClient } from "@/features/auth/lib/auth.client";
 import { redirect } from "next/navigation";
 import { routes } from "@/lib/routes";
-import { signInEmailServerAction } from "./server";
 
 export async function emailSignInFormClientAction(
   actionName: TSignInFormAction,
   setActionName: Dispatch<SetStateAction<TSignInFormAction | null>>,
   rememberMe: boolean,
-  prevState: TSignInFormState | null,
+  _prevState: TSignInFormState | null,
   formData: FormData,
 ): Promise<TSignInFormState> {
   setActionName(actionName);
@@ -44,7 +43,7 @@ export async function emailSignInFormClientAction(
       };
     }
 
-    const response = await signInEmailServerAction({
+    const response = await authClient.signIn.email({
       email: validationResult.output.email,
       password: validationResult.output.password,
       rememberMe: rememberMe,
@@ -56,7 +55,7 @@ export async function emailSignInFormClientAction(
         data: rawFormData as unknown as TSignInFormStateData,
         errors: {
           root: prepareValibotErrors(
-            response.error?.messages || [
+            response.error?.message || [
               "Sign in failed. Make sure credentials are valid and try again.",
             ],
           ),

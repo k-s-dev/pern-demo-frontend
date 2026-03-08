@@ -31,8 +31,9 @@ export const auth = betterAuth({
     requireEmailVerification: true,
     password: { hash: hashPassword, verify: verifyPassword },
     sendResetPassword: async ({ user, url }) => {
-      await sendVerificationEmail(user.email, url, "RESET_PASSWORD");
-      console.log(`Reset password url for ${user.name}: ${url}`);
+      if (user.emailVerified) {
+        await sendVerificationEmail(user.email, url, "RESET_PASSWORD");
+      }
     },
   },
   emailVerification: {
@@ -41,9 +42,6 @@ export const auth = betterAuth({
     sendVerificationEmail: async ({ user, url }) => {
       if (!user.emailVerified) {
         await sendVerificationEmail(user.email, url, "EMAIL_VERIFICATION");
-        console.log(`Email verification url for ${user.email}: ${url}`);
-      } else {
-        console.log(`${user.email} already verified.`);
       }
     },
   },
