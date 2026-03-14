@@ -19,6 +19,27 @@ export const routes = {
     deleteCookies: "/api/auth/delete-cookies",
   },
 
+  org: {
+    root: "/org",
+    tasks: {
+      root: "/org/tasks",
+      settings: {
+        root: "/org/tasks/settings",
+      },
+      workspace: {
+        withId(id: string, suffix?: TRouteSuffix) {
+          return `/org/tasks/workspace/${id}${suffix ? "/" + suffix : ""}`;
+        },
+      },
+    },
+    timer: {
+      root: "/org/timer",
+    },
+    counter: {
+      root: "/org/counter",
+    },
+  },
+
   /**
    * Public routes: do not need authentication.
    */

@@ -35,7 +35,7 @@ export function PhoneUp({ children }: { children?: ReactNode }) {
 }
 
 export function MainPhoneUp({ children }: { children?: ReactNode }) {
-  return <div className={clsx(styles.main)}>{children}</div>;
+  return <main className={clsx(styles.main)}>{children}</main>;
 }
 
 export function LeftPhoneUp({ children }: { children?: ReactNode }) {
@@ -69,7 +69,7 @@ export function LeftPhoneUp({ children }: { children?: ReactNode }) {
   );
 
   return (
-    <div
+    <aside
       className={clsx(
         styles.sidebar,
         styles.left,
@@ -88,7 +88,7 @@ export function LeftPhoneUp({ children }: { children?: ReactNode }) {
         </div>
         {icons}
       </Flex>
-    </div>
+    </aside>
   );
 }
 
@@ -122,7 +122,7 @@ export function RightPhoneUp({ children }: { children?: ReactNode }) {
   );
 
   return (
-    <div
+    <aside
       className={clsx(
         styles.sidebar,
         styles.right,
@@ -141,6 +141,6 @@ export function RightPhoneUp({ children }: { children?: ReactNode }) {
         </div>
         {icons}
       </Flex>
-    </div>
+    </aside>
   );
 }

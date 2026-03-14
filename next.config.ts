@@ -3,8 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
+  cacheComponents: true,
   allowedDevOrigins: ["192.168.1.5"],
   experimental: {
+    globalNotFound: true,
     serverActions: {
       bodySizeLimit: "5mb",
     },

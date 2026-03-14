@@ -9,7 +9,13 @@ import { ReactNode } from "react";
  */
 export default function Layout03({ children }: { children: ReactNode }) {
   return (
-    <Box h={"100%"} pb={"xl"} style={{ overflow: "auto" }}>
+    <Box
+      component="main"
+      h={"100%"}
+      pb={"xl"}
+      style={{ overflow: "auto" }}
+      mx={"auto"}
+    >
       {children}
     </Box>
   );

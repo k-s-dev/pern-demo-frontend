@@ -44,12 +44,15 @@ export function NavLinksTitle() {
 export const navLinks: INavLink[] = [
   {
     title: "Org",
-    href: "/org",
+    href: routes.org.root,
     links: [
       {
         title: "Tasks",
-        href: "/org/tasks",
+        href: routes.org.tasks.root,
+        links: [{ title: "Settings", href: routes.org.tasks.settings.root }],
       },
+      { title: "Timer", href: routes.org.timer.root },
+      { title: "Counter", href: routes.org.counter.root },
     ],
   },
 ];

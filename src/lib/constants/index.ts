@@ -28,3 +28,8 @@ export const tags = {
     profile: { expire: 0 },
   },
 };
+
+export const ERROR_MESSAGES = {
+  internalServer: "Internal server error. Please try again.",
+  unauthorized: "Unauthorized access. Permission denied.",
+};

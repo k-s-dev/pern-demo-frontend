@@ -21,8 +21,9 @@ export default function RequestPasswordReset({ user }: { user: TSessionUser }) {
     notifications.show({
       message: (
         <Text>
-          Email verification is required to reset password.
-          If email is verified, link to reset password has been sent to the resigtered email.
+          Email verification is required to reset password. If email is
+          verified, link to reset password has been sent to the resigtered
+          email.
         </Text>
       ),
       autoClose: false,

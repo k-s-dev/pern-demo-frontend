@@ -40,16 +40,16 @@ export function Phone({ children }: { children?: ReactNode }) {
 }
 
 export function MainPhone({ children }: { children?: ReactNode }) {
-  return <div className={clsx(styles.main)}>{children}</div>;
+  return <main className={clsx(styles.main)}>{children}</main>;
 }
 
 export function LeftPhone({ children }: { children?: ReactNode }) {
   const state = useLayoutContext();
 
   return (
-    <div className={clsx(styles.left, !state.left.isOpen && styles.hide)}>
+    <aside className={clsx(styles.left, !state.left.isOpen && styles.hide)}>
       {children}
-    </div>
+    </aside>
   );
 }
 
@@ -57,8 +57,8 @@ export function RightPhone({ children }: { children?: ReactNode }) {
   const state = useLayoutContext();
 
   return (
-    <div className={clsx(styles.right, !state.right.isOpen && styles.hide)}>
+    <aside className={clsx(styles.right, !state.right.isOpen && styles.hide)}>
       {children}
-    </div>
+    </aside>
   );
 }

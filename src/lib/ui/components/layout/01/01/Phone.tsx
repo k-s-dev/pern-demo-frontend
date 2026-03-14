@@ -12,7 +12,7 @@ export function Phone({ children }: { children?: ReactNode }) {
 
   return (
     <div className={clsx(styles.root)}>
-      <div className={clsx(styles.sidebarsToggleContainer)}>
+      <section className={clsx(styles.sidebarsToggleContainer)}>
         <Flex justify={"space-between"}>
           <Text
             component={!state.left.isOpen ? FaAnglesDown : FaAnglesUp}
@@ -23,22 +23,22 @@ export function Phone({ children }: { children?: ReactNode }) {
             className={clsx(styles.toggle)}
           />
         </Flex>
-      </div>
+      </section>
       {children}
     </div>
   );
 }
 
 export function MainPhone({ children }: { children?: ReactNode }) {
-  return <div className={clsx(styles.main)}>{children}</div>;
+  return <main className={clsx(styles.main)}>{children}</main>;
 }
 
 export function LeftPhone({ children }: { children?: ReactNode }) {
   const state = useLayoutContext();
 
   return (
-    <div className={clsx(styles.left, !state.left.isOpen && styles.hide)}>
+    <aside className={clsx(styles.left, !state.left.isOpen && styles.hide)}>
       {children}
-    </div>
+    </aside>
   );
 }
