@@ -27,12 +27,6 @@
 - Frontend
   - Forms: validation both on client and server
 
-## Roadmap
-
-- Cypress e2e tests for auth
-- Org app
-- Nextjs 16 prerendering with cache components
-
 ## Workflow
 
 ### Pre build check list

@@ -14,6 +14,7 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
+  trustedOrigins: appConfig.auth.trustedOrigins,
   socialProviders: {
     google: {
       clientId: appConfig.auth.socialProviders.google.id,
@@ -49,7 +50,7 @@ export const auth = betterAuth({
     additionalFields: {
       role: {
         type: Object.values(USER_ROLE),
-        required: false,
+        required: true,
         defaultValue: USER_ROLE.USER,
         input: false, // don't allow user to set role
       },

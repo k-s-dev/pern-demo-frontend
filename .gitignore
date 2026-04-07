@@ -4,6 +4,8 @@
 ## quarto: ignore quarto preview generated files
 *_files/
 /*.html
+## cypress
+/cypress/screenshots/
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 

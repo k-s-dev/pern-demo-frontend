@@ -5,6 +5,7 @@
 
 import { APP_REQUIRED_ENV_VARIABLES } from "./constants";
 import { EnvError } from "./definitions/errors";
+import { extractArrayfromString } from "./utils";
 
 APP_REQUIRED_ENV_VARIABLES.forEach((variable) => {
   const value = process.env[variable];
@@ -13,6 +14,10 @@ APP_REQUIRED_ENV_VARIABLES.forEach((variable) => {
     throw new EnvError({});
   }
 });
+
+const trustedOrigins = extractArrayfromString(
+  process.env.TRUSTED_ORIGINS as string,
+);
 
 export const appConfig = {
   nodeEnv: process.env.NODE_ENV || "development",
@@ -34,6 +39,7 @@ export const appConfig = {
         secret: process.env.AUTH_GITHUB_SECRET as string,
       },
     },
+    trustedOrigins,
   },
   api: {
     url: process.env.API_URL as string,

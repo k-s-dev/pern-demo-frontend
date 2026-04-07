@@ -1,10 +1,8 @@
-import { Session } from "better-auth";
+import type { Session } from "../prisma/client";
 import type { TSessionUser } from "./user";
 
-export type TSession = Session;
-
 export type TSessionData = {
-  session: TSession;
+  session: Session;
   user: TSessionUser;
 };
 

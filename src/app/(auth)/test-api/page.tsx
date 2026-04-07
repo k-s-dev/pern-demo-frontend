@@ -1,9 +1,9 @@
-import { betterFetch } from "@/lib/data/betterFetchFactory";
+import { betterFetchBase } from "@/lib/data/betterFetchFactory";
 import { prepareHeaders } from "@/lib/data/prepareHeaders";
 import { Text } from "@mantine/core";
 
 export default async function Page() {
-  const response = await betterFetch("next-demo/api/test-auth", {
+  const response = await betterFetchBase("next-demo/api/test-auth", {
     headers: await prepareHeaders(),
   });
 

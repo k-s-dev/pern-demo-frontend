@@ -15,7 +15,7 @@ import { TServerResponsePromise } from "@/lib/definitions/serverResponse";
 
 const defaultErrorMessage = "Failed to delete resource. Please try again.";
 
-export default function DeleteModalButton<GServerResponse = undefined>({
+export default function DeleteModalButton<GResponseData>({
   deleteAction,
   children,
   title,
@@ -23,7 +23,7 @@ export default function DeleteModalButton<GServerResponse = undefined>({
   disabled = false,
   ...triggerProps
 }: {
-  deleteAction: () => TServerResponsePromise<GServerResponse>;
+  deleteAction: () => TServerResponsePromise<GResponseData>;
   children?: React.ReactNode;
   triggerContent?: React.ReactNode;
   title?: string;
@@ -47,9 +47,7 @@ export default function DeleteModalButton<GServerResponse = undefined>({
               setErrorMessages([defaultErrorMessage]);
             }
             if (response?.error) {
-              setErrorMessages(
-                response.error.messages || [response.error.statusText],
-              );
+              setErrorMessages([response.error.message]);
             }
             close();
           }}

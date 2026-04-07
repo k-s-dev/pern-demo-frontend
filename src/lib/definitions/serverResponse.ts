@@ -1,3 +1,5 @@
+import { ERROR_MESSAGES } from "../constants";
+
 export interface ServerActionProps<TFormState> {
   prevState: TFormState;
   formData: FormData;
@@ -8,23 +10,20 @@ export type TServerAction<TFormState> = (
   formData: FormData,
 ) => Promise<TFormState>;
 
-export type TDataRequestMode = "server" | "client";
-
-export type TServerResponseStatus = "error" | "success";
-
 type TServerResponseWithData<GData> = {
   data: GData;
+  message?: string;
   messages?: string[];
   error?: never;
 };
 
 type TServerResponseWithError = {
   data?: never;
+  message?: never;
   messages?: never;
   error: {
-    messages: string[];
-    status?: number;
-    statusText?: string;
+    message: string;
+    messages?: string[];
   };
 };
 
@@ -35,3 +34,16 @@ export type TServerResponse<GData = unknown> =
 export type TServerResponsePromise<GData = unknown> = Promise<
   TServerResponse<GData>
 >;
+
+export function prepareError(error: {
+  status: number;
+  statusText: string;
+  message?: string;
+}) {
+  return {
+    error: {
+      message:
+        error.message || error.statusText || ERROR_MESSAGES.internalServer,
+    },
+  };
+}

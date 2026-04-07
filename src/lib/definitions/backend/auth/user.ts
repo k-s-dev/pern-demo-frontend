@@ -1,8 +1,8 @@
 import * as v from "valibot";
 import type { USER_ROLE } from "../prisma/enums";
 import { USER_ROLE as EUserRole } from "../prisma/enums";
-import { SDbId, SEmail, SImageUrl, SName, SPassword } from "../generic";
-import { User } from "better-auth";
+import type { User } from "../prisma/client";
+import { SDbId, SEmail, SImageUrl, SName, SPassword } from "../index";
 
 export type TUserRole = (typeof USER_ROLE)[keyof typeof USER_ROLE];
 

@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "sync:backend": "tsx --no-warnings ./ops/syncWithBackend.js",
+    "ops:sync:backend": "tsx --no-warnings ./ops/syncWithBackend.js",
+    "ops:createEnvSamples": "tsx --no-warnings ./ops/createEnvSamples.js",
     "env:prod": "npx cross-env NODE_ENV=production",
     "env:dev": "npx cross-env NODE_ENV=development",
     "env:test": "npx cross-env NODE_ENV=test",
@@ -21,7 +22,6 @@
     "test:jest": "npm run env:test -- jest",
     "test:cypress:open": "npm run env:test -- cypress open",
     "test:cypress:run": "npm run env:test -- cypress run",
-    "ops:create:env:samples": "tsx --no-warnings ./ops/createEnvSamples.js",
     "prisma:generate": "npx prisma generate --config ./src/features/auth/prisma/prisma.config.ts"
   },
   "dependencies": {
@@ -36,6 +36,7 @@
     "@node-rs/argon2": "^2.0.2",
     "@prisma/adapter-pg": "^7.4.1",
     "@prisma/client": "^7.4.1",
+    "@tanstack/react-table": "^8.21.3",
     "@tiptap/extension-highlight": "^3.19.0",
     "@tiptap/extension-link": "^3.19.0",
     "@tiptap/extension-subscript": "^3.19.0",
@@ -61,6 +62,7 @@
     "react-dom": "19.2.3",
     "react-icons": "^5.5.0",
     "recharts": "^3.7.0",
+    "sanitize-html": "^2.17.2",
     "use-immer": "^0.11.0",
     "valibot": "^1.2.0"
   },
@@ -74,6 +76,7 @@
     "@types/pg": "^8.16.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/sanitize-html": "^2.16.1",
     "babel-plugin-react-compiler": "1.0.0",
     "cypress": "^15.10.0",
     "eslint": "^9",
