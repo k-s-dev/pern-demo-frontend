@@ -8,5 +8,5 @@ export const betterFetchBase = createFetch({
   baseURL: cleanUrl(appConfig.api.url),
   customFetchImpl: globalThis.fetch,
   credentials: "include",
-  cache: "force-cache",
+  cache: "no-store",
 });

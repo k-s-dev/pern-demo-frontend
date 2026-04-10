@@ -4,8 +4,11 @@ import { Button, Flex, Text, Title } from "@mantine/core";
 import { useActionState } from "react";
 import { categoryUpdateClientAction } from "./clientAction";
 import { FaArrowsRotate } from "react-icons/fa6";
-import { Category } from "@/lib/definitions/backend/prisma/client";
-import { TCategoryFormData, TCategoryFormState } from "../../definitions";
+import {
+  TCategoryFormData,
+  TCategoryFormState,
+  TCategoryWithChildren,
+} from "../../definitions";
 import { InputText } from "@/lib/ui/components/form/fields/InputText";
 import { RichTextInput } from "@/lib/ui/components/form/fields/RichTextInput";
 import FormMessages from "@/lib/ui/components/form/FormMessages";
@@ -14,7 +17,7 @@ export default function CategoryDetailForm({
   category,
   formId,
 }: {
-  category: Category;
+  category: TCategoryWithChildren;
   formId?: string;
 }) {
   const formIdFinal = formId || "category-form";
@@ -24,7 +27,7 @@ export default function CategoryDetailForm({
   };
 
   const [formState, formAction, isPending] = useActionState(
-    categoryUpdateClientAction.bind(null, category.id),
+    categoryUpdateClientAction.bind(null, category),
     initialFormState,
   );
 
@@ -61,6 +64,12 @@ export default function CategoryDetailForm({
           <RichTextInput
             textInputProps={{ form: formId, name: "description" }}
             initialValue={formState.data?.description || ""}
+          />
+          <input
+            type="text"
+            hidden
+            name="workspaceId"
+            defaultValue={category.workspaceId}
           />
           <Flex justify={"flex-end"}>
             <Button

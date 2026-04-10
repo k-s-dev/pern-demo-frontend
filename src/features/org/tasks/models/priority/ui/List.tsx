@@ -6,23 +6,26 @@ import { useState } from "react";
 import PriorityFormRow, { PriorityFormHeader } from "./form/Form";
 import { CardHeader } from "@/lib/ui/components/card";
 import DeleteModalButton from "@/lib/ui/components/form/DeleteModal";
-import { useTasksContext } from "../../../ui/hooks/TasksContext";
 import { priorityDeleteMany } from "../data";
 import { generateRandomString } from "@/lib/utils/random";
+import { useRouter } from "next/navigation";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { TWorkspaceIncludeAll } from "@/lib/definitions/backend/org/workspace";
 
-export default function PriorityList({ workspaceId }: { workspaceId: string }) {
+export default function PriorityList({
+  workspace,
+}: {
+  workspace: TWorkspaceIncludeAll;
+}) {
   const [resetKey, setResetKey] = useState(0);
   const [selectedIds, setSelectedIds] = useImmer<string[]>([]);
-  const tasksCtx = useTasksContext();
-  const workspace = tasksCtx.state.workspaces.find(
-    (workspace) => workspace.id === workspaceId,
-  );
+  const router = useRouter();
 
   if (!workspace) {
     return null;
   }
 
-  const priorities = workspace.priorities || [];
+  const priorities = workspace.priorities;
 
   const allSelected =
     priorities.length > 0 &&
@@ -58,6 +61,7 @@ export default function PriorityList({ workspaceId }: { workspaceId: string }) {
               <DeleteSelected
                 selectedIds={selectedIds}
                 setSelectedIdsAction={setSelectedIds}
+                router={router}
               />
               <Button onClick={handleReset} color="gray" variant="light">
                 Reset
@@ -99,9 +103,11 @@ export default function PriorityList({ workspaceId }: { workspaceId: string }) {
 function DeleteSelected({
   selectedIds,
   setSelectedIdsAction,
+  router,
 }: {
   selectedIds: string[];
   setSelectedIdsAction: Updater<string[]>;
+  router: AppRouterInstance;
 }) {
   return (
     <DeleteModalButton
@@ -115,6 +121,7 @@ function DeleteSelected({
       deleteAction={async () => {
         const response = await priorityDeleteMany(selectedIds);
         setSelectedIdsAction([]);
+        router.refresh();
         return response;
       }}
       disabled={selectedIds.length <= 0}

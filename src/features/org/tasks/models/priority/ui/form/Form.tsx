@@ -20,6 +20,7 @@ import { TPriorityFormData, TPriorityFormState } from "../../definitions";
 import FormMessages from "@/lib/ui/components/form/FormMessages";
 import DeleteModalButton from "@/lib/ui/components/form/DeleteModal";
 import { priorityDelete } from "../../data";
+import { useRouter } from "next/navigation";
 
 export default function PriorityFormRow({
   workspace,
@@ -37,6 +38,7 @@ export default function PriorityFormRow({
   randomFormId?: string;
 }) {
   const [resetKey, setResetKey] = useState(0);
+
   const formId = priority
     ? `priority-update-form-${priority.id}`
     : `priority-create-form-row-${randomFormId}`;
@@ -245,11 +247,14 @@ function ResetButton({
 }
 
 function DeleteButton({ priority }: { priority?: Priority }) {
+  const router = useRouter();
+
   return (
     <DeleteModalButton
       deleteAction={async () => {
         if (priority) {
           const response = await priorityDelete(priority.id);
+          router.refresh();
           return response;
         }
         return { error: { message: "No selection." } };

@@ -6,6 +6,8 @@ import { tagDelete, tagUpdate } from "../data";
 import FormMessages from "@/lib/ui/components/form/FormMessages";
 import { SaveIcon } from "@/lib/ui/components/icons/TooltipIcons";
 import DeleteModalIcon from "@/lib/ui/components/form/DeleteModalIcon";
+import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
 
 export default function EditTag({
   tag,
@@ -18,6 +20,7 @@ export default function EditTag({
 }) {
   const [value, setValue] = useState(tag.name);
   const [errors, setErrors] = useImmer<string[]>([]);
+  const router = useRouter();
 
   async function handleEdit() {
     const response = await tagUpdate(tag.id, { name: value });
@@ -37,6 +40,9 @@ export default function EditTag({
         draft.push(response.error.message);
       });
     }
+
+    notifications.show({ message: `Tag ${tag.name} deleted successfully.` });
+    router.refresh();
 
     return response;
   }

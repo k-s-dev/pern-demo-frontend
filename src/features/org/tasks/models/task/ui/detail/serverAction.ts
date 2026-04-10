@@ -2,7 +2,6 @@
 
 import * as v from "valibot";
 import { parseFormData } from "@/lib/utils/form";
-import { revalidatePath } from "next/cache";
 import { routes } from "@/lib/routes";
 import sanitizeHtml from "sanitize-html";
 import {
@@ -11,10 +10,12 @@ import {
   TTaskFormState,
 } from "../../definitions";
 import { taskGet, taskUpdate } from "../../data";
+import { headers } from "next/headers";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export async function taskUpdateServerAction(
   id: string,
-  categoryId: string,
   tagIds: string[],
   prevState: TTaskFormState | null,
   formData: FormData,
@@ -45,21 +46,8 @@ export async function taskUpdateServerAction(
   const validatedData = validationResult.output;
 
   // prepare form data for submission to backend
-  let response;
-
-  try {
-    response = await taskGet(id);
-  } catch {
-    return {
-      status: "error",
-      data: rawFormData,
-      errors: {
-        root: [
-          "Failed to update user due to internal server error. Please try again.",
-        ],
-      },
-    };
-  }
+  const headersList = await headers();
+  const response = await taskGet(id, headersList);
 
   if (response.error) {
     return {
@@ -76,6 +64,7 @@ export async function taskUpdateServerAction(
   const apiSubmissionData = {
     ...validatedData,
     description: sanitizeHtml(validatedData.description || ""),
+    tagIds,
   };
 
   // try submitting data to backend
@@ -92,10 +81,6 @@ export async function taskUpdateServerAction(
     };
   }
 
-  revalidatePath(routes.org.tasks.root);
-
-  return {
-    status: "success",
-    data: rawFormData,
-  };
+  revalidatePath(routes.org.tasks.root, "layout");
+  redirect(routes.org.tasks.root);
 }

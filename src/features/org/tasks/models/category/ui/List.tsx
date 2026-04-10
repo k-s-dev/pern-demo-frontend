@@ -5,14 +5,13 @@ import { CardContent, CardHeader } from "@/lib/ui/components/card";
 import CategoryTree from "./Tree";
 import { FaCircleExclamation, FaExclamation } from "react-icons/fa6";
 import { useDisclosure } from "@mantine/hooks";
-import { useTasksContext } from "../../../ui/hooks/TasksContext";
+import { TWorkspaceIncludeAll } from "@/lib/definitions/backend/org/workspace";
 
-export default function CategoryList({ workspaceId }: { workspaceId: string }) {
-  const tasksCtx = useTasksContext();
-  const workspace = tasksCtx.state.workspaces.find(
-    (workspace) => workspace.id === workspaceId,
-  );
-
+export default function CategoryList({
+  workspace,
+}: {
+  workspace: TWorkspaceIncludeAll;
+}) {
   if (!workspace) {
     return null;
   }

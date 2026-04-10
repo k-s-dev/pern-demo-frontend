@@ -12,8 +12,6 @@ import {
   prepareError,
   TServerResponsePromise,
 } from "@/lib/definitions/serverResponse";
-import { routes } from "@/lib/routes";
-import { revalidatePath } from "next/cache";
 
 export async function statusCreate(
   body: TStatusCreateDataIn,
@@ -25,16 +23,15 @@ export async function statusCreate(
     body: JSON.stringify(body),
   });
   if (response.error) return prepareError(response.error);
-  revalidatePath(routes.org.tasks.root);
   return { data: response.data };
 }
 
-export async function statusGetList(): TServerResponsePromise<
-  TStatusIncludeAll[]
-> {
+export async function statusGetList(
+  headersList: Headers,
+): TServerResponsePromise<TStatusIncludeAll[]> {
   const url = appConfig.api.url + "/org/status/list";
   const response = await betterFetchBase<TStatusIncludeAll[]>(url, {
-    headers: await prepareHeaders(),
+    headers: headersList,
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -42,11 +39,12 @@ export async function statusGetList(): TServerResponsePromise<
 
 export async function statusGet(
   id: string,
+  headersList: Headers,
 ): TServerResponsePromise<TStatusIncludeAll> {
   const url = appConfig.api.url + "/org/status/" + id;
   const response = await betterFetchBase<TStatusIncludeAll>(url, {
     method: "get",
-    headers: await prepareHeaders(),
+    headers: headersList,
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -63,7 +61,6 @@ export async function statusUpdate(
     body: JSON.stringify(body),
   });
   if (response.error) return prepareError(response.error);
-  revalidatePath(routes.org.tasks.root);
   return { data: response.data };
 }
 
@@ -76,7 +73,6 @@ export async function statusDelete(
     headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
-  revalidatePath(routes.org.tasks.root);
   return { data: response.data };
 }
 
@@ -100,7 +96,6 @@ export async function statusDeleteMany(ids: string[]) {
       },
     };
   }
-  revalidatePath(routes.org.tasks.root);
   return {
     data: {},
     message: `${ids.length} status[s] deleted successfully.`,

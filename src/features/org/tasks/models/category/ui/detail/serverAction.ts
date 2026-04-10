@@ -2,18 +2,20 @@
 
 import * as v from "valibot";
 import { parseFormData } from "@/lib/utils/form";
-import { revalidatePath } from "next/cache";
 import { routes } from "@/lib/routes";
 import sanitizeHtml from "sanitize-html";
 import {
   SCategoryFormData,
   TCategoryFormData,
   TCategoryFormState,
+  TCategoryWithChildren,
 } from "../../definitions";
 import { categoryGet, categoryUpdate } from "../../data";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function categoryUpdateServerAction(
-  id: string,
+  category: TCategoryWithChildren,
   prevState: TCategoryFormState | null,
   formData: FormData,
 ): Promise<TCategoryFormState> {
@@ -46,20 +48,8 @@ export async function categoryUpdateServerAction(
 
   // prepare form data for submission to backend
   let response;
-
-  try {
-    response = await categoryGet(id);
-  } catch {
-    return {
-      status: "error",
-      data: rawFormData,
-      errors: {
-        root: [
-          "Failed to update user due to internal server error. Please try again.",
-        ],
-      },
-    };
-  }
+  const headersList = await headers();
+  response = await categoryGet(category.id, headersList);
 
   if (response.error) {
     return {
@@ -74,16 +64,14 @@ export async function categoryUpdateServerAction(
   }
 
   const apiSubmissionData = {
-    ...validatedData,
     ...response.data,
+    ...validatedData,
     description: sanitizeHtml(validatedData.description || ""),
   };
 
   // try submitting data to backend
-  try {
-    await categoryUpdate(id, apiSubmissionData);
-  } catch (error) {
-    console.log(error);
+  response = await categoryUpdate(category.id, apiSubmissionData);
+  if (response.error) {
     return {
       status: "error",
       data: rawFormData,
@@ -95,9 +83,5 @@ export async function categoryUpdateServerAction(
     };
   }
 
-  revalidatePath(routes.org.tasks.root);
-  return {
-    status: "success",
-    data: rawFormData,
-  };
+  redirect(routes.org.tasks.workspace.withId(category.workspaceId));
 }

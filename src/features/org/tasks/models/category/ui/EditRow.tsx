@@ -27,6 +27,8 @@ import { categoryDelete, categoryUpdate } from "../data";
 import DeleteModalIcon from "@/lib/ui/components/form/DeleteModalIcon";
 import FormMessages from "@/lib/ui/components/form/FormMessages";
 import { useDisclosure } from "@mantine/hooks";
+import { useRouter } from "next/navigation";
+import { TCategoryWithChildren } from "../definitions";
 
 export default function EditCategoryRow({
   category,
@@ -38,7 +40,7 @@ export default function EditCategoryRow({
   toggleOpenAllAction,
   toggleAddChildAction,
 }: {
-  category: Category;
+  category: TCategoryWithChildren;
   open: boolean;
   selected: boolean;
   isLeaf: boolean;
@@ -50,6 +52,7 @@ export default function EditCategoryRow({
   const [name, setName] = useState(category.name);
   const [order, setOrder] = useState(category.order || 1);
   const [errors, setErrors] = useImmer<string[]>([]);
+  const router = useRouter();
 
   async function handleEdit(category: Category) {
     const response = await categoryUpdate(category.id, {
@@ -62,6 +65,8 @@ export default function EditCategoryRow({
         draft.push(response.error.message);
       });
     }
+
+    router.refresh();
   }
 
   async function handleDelete() {
@@ -73,6 +78,7 @@ export default function EditCategoryRow({
       });
     }
 
+    router.refresh();
     return response;
   }
 
@@ -155,7 +161,7 @@ export default function EditCategoryRow({
   );
 }
 
-function DetailModal({ category }: { category: Category }) {
+function DetailModal({ category }: { category: TCategoryWithChildren }) {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (

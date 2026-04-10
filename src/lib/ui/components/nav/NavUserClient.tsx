@@ -8,13 +8,13 @@ import { TSessionData } from "@/lib/definitions/backend/auth/generic";
 import { routes } from "@/lib/routes";
 import { Flex, Menu, MenuDropdown, MenuItem, MenuTarget } from "@mantine/core";
 import Link from "next/link";
-import { useSessionContext } from "../providers/SessionProvider";
-import { use } from "react";
 
-export default function NavUserClient() {
-  const sessionCtx = useSessionContext();
-
-  if (!sessionCtx.sessionDataPromise) {
+export default function NavUserClient({
+  sessionData,
+}: {
+  sessionData: TSessionData | null;
+}) {
+  if (!sessionData) {
     return (
       <Flex gap={"xs"} justify={"space-between"} wrap={"wrap"}>
         <SignInLinkButton />
@@ -22,8 +22,6 @@ export default function NavUserClient() {
       </Flex>
     );
   }
-
-  const sessionData = use(sessionCtx.sessionDataPromise);
 
   if (!sessionData) {
     return (

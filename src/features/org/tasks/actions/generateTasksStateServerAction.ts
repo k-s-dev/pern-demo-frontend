@@ -1,32 +1,25 @@
-import { getSession } from "@/features/auth/lib/getSession";
-import { tagGetList } from "@/features/org/tasks/models/tag/data";
-import { taskGetList } from "@/features/org/tasks/models/task/data";
-import { workspaceGetList } from "@/features/org/tasks/models/workspace/data";
-import {
-  ITasksState,
-  TasksProvider,
-} from "@/features/org/tasks/ui/hooks/TasksContext";
-import { prepareHeaders } from "@/lib/data/prepareHeaders";
-import { TSessionUser } from "@/lib/definitions/backend/auth/user";
-import { routes } from "@/lib/routes";
-import { SessionProvider } from "@/lib/ui/components/providers/SessionProvider";
-import { redirect } from "next/navigation";
+"use server";
 
-export default async function layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import { getSession } from "@/features/auth/lib/getSession";
+import { prepareHeaders } from "@/lib/data/prepareHeaders";
+import { workspaceGetList } from "../models/workspace/data";
+import { tagGetList } from "../models/tag/data";
+import { taskGetList } from "../models/task/data";
+import { redirect } from "next/navigation";
+import { routes } from "@/lib/routes";
+import { ITasksState } from "../ui/hooks/TasksContext";
+import { TSessionUser } from "@/lib/definitions/backend/auth/user";
+
+export async function generateTasksStateServerAction() {
   const headersList = await prepareHeaders();
   const sessionData = await getSession();
-
-  if (!sessionData || !sessionData.user) {
-    return redirect(routes.auth.signIn);
-  }
-
   const workspaceResponse = await workspaceGetList(headersList);
   const tagResponse = await tagGetList(headersList);
   const taskResponse = await taskGetList(headersList);
+
+  if (!sessionData || !sessionData.user) {
+    redirect(routes.auth.signIn);
+  }
 
   const tasksStateData: ITasksState = {
     resetKey: true,
@@ -48,11 +41,5 @@ export default async function layout({
     sort: [],
   };
 
-  return (
-    <>
-      <SessionProvider initialSessionData={sessionData}>
-        <TasksProvider stateData={tasksStateData}>{children}</TasksProvider>
-      </SessionProvider>
-    </>
-  );
+  return tasksStateData;
 }

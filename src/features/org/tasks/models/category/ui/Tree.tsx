@@ -1,3 +1,5 @@
+"use client";
+
 import EditCategoryRow from "./EditRow";
 import { Box, Checkbox, Divider, Flex } from "@mantine/core";
 import { Updater, useImmer } from "use-immer";
@@ -12,9 +14,10 @@ import {
   getRoot,
 } from "@/lib/utils/tree";
 import { TWorkspaceIncludeAll } from "@/lib/definitions/backend/org/workspace";
-import { Category } from "@/lib/definitions/backend/prisma/client";
 import { categoryDeleteMany } from "../data";
 import DeleteModalButton from "@/lib/ui/components/form/DeleteModal";
+import { useRouter } from "next/navigation";
+import { TCategoryWithChildren } from "../definitions";
 
 export default function CategoryTree({
   workspace,
@@ -28,6 +31,7 @@ export default function CategoryTree({
    */
   const [state, setState] = useImmer({} as TreeState);
   const [search, setSearch] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
     workspace.categories.forEach((category) => {
@@ -53,9 +57,9 @@ export default function CategoryTree({
     );
   }
 
-  const filteredCategories = [] as Category[];
+  const filteredCategories = [] as TCategoryWithChildren[];
 
-  const categories =
+  const processedCategories =
     search === ""
       ? workspace.categories
       : workspace.categories.filter((category) => {
@@ -67,13 +71,13 @@ export default function CategoryTree({
           return result;
         });
 
-  categories.forEach((category) => {
+  processedCategories.forEach((category) => {
     addItem(filteredCategories, category);
     const parents = getAllParents(workspace.categories, category);
     parents.forEach((parent) => addItem(filteredCategories, parent));
   });
 
-  const rootCategories = [] as Category[];
+  const rootCategories = [] as TCategoryWithChildren[];
   filteredCategories.forEach((category) => {
     const rootId = getRoot(workspace.categories, category);
     if (!rootCategories.find((item) => item.id === rootId)) {
@@ -112,6 +116,7 @@ export default function CategoryTree({
         delete draft[id];
       });
     });
+    router.refresh();
     return response;
   }
 
@@ -160,8 +165,8 @@ function RenderNode({
   depth = 0,
   offset = 10,
 }: {
-  categories: Category[];
-  category: Category;
+  categories: TCategoryWithChildren[];
+  category: TCategoryWithChildren;
   state: TreeState;
   setState: Updater<TreeState>;
   depth?: number;
@@ -175,7 +180,7 @@ function RenderNode({
     });
   }
 
-  function toggleAllChildren(category: Category) {
+  function toggleAllChildren(category: TCategoryWithChildren) {
     setState((draft) => {
       if (draft[category.id]) {
         const currentState = draft[category.id].showChildren;
@@ -194,7 +199,10 @@ function RenderNode({
     });
   }
 
-  function toggleSelection(category: Category, categories: Category[]) {
+  function toggleSelection(
+    category: TCategoryWithChildren,
+    categories: TCategoryWithChildren[],
+  ) {
     setState((draft) => {
       draft[category.id].isSelected = !draft[category.id].isSelected;
     });

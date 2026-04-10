@@ -25,7 +25,21 @@
   - sessions: cookie based token, verified on backend
   - authorization (permissions): custom role based checks
 - Frontend
+  - Nextjs 16: Cache components with SSR, SSG & pre-rendering
+  - React 19: Server components
   - Forms: validation both on client and server
+  - Nested table: custom nested table with infinite depth
+- Multiple apps
+  - Org
+    - Tasks
+    - Timer
+    - Counter
+
+## Roadmap
+
+- [ ] review and finalize tree tables compatibility with Nextjs cache components
+- [ ] Tanstack table not functioning with latest react version
+  - if fix is not implemented move to custom grid based table
 
 ## Workflow
 

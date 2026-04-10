@@ -5,10 +5,11 @@ import {
   SCategoryFormData,
   TCategoryFormData,
   TCategoryFormState,
+  TCategoryWithChildren,
 } from "../../definitions";
 
 export async function categoryUpdateClientAction(
-  id: string,
+  category: TCategoryWithChildren,
   prevState: TCategoryFormState | null,
   formData: FormData,
 ): Promise<TCategoryFormState> {
@@ -23,6 +24,7 @@ export async function categoryUpdateClientAction(
   });
 
   const validationResult = v.safeParse(SCategoryFormData, parsedFormData);
+
   if (!validationResult.success) {
     const errors = v.flatten<typeof SCategoryFormData>(validationResult.issues);
     return {
@@ -33,5 +35,5 @@ export async function categoryUpdateClientAction(
     };
   }
 
-  return await categoryUpdateServerAction(id, prevState, formData);
+  return await categoryUpdateServerAction(category, prevState, formData);
 }

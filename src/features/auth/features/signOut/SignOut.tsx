@@ -1,16 +1,17 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { signOutServerAction } from "./server.action";
-import { useSessionContext } from "@/lib/ui/components/providers/SessionProvider";
+import { routes } from "@/lib/routes";
 
 export default function SignOut({ children }: { children: React.ReactNode }) {
-  const sessionCtx = useSessionContext();
+  const router = useRouter();
 
   return (
     <div
       onClick={async () => {
-        sessionCtx.setSessionDataPromise(null);
         await signOutServerAction();
+        router.push(routes.DEFAULT_SIGNOUT_REDIRECT);
       }}
     >
       {children}

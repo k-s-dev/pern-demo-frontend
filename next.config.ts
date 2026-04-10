@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   allowedDevOrigins: ["192.168.1.5"],
   experimental: {
+    serverComponentsHmrCache: false,
     globalNotFound: true,
     serverActions: {
       bodySizeLimit: "5mb",

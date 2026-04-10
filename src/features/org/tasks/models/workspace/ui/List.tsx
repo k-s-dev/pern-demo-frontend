@@ -5,7 +5,7 @@ import {
   generateCheckboxHeader,
 } from "@/lib/ui/table/TableCheckbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Button, Text } from "@mantine/core";
 import Link from "next/link";
 import { routes } from "@/lib/routes";
@@ -18,6 +18,7 @@ import { workspaceDelete, workspaceDeleteMany } from "../data";
 export default function WorkspaceList() {
   const tasksCtx = useTasksContext();
   const workspaces = tasksCtx.state.workspaces;
+  const [workspaceTableResetKey, setWorkspaceTableResetKey] = useState(true);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columns = useMemo<ColumnDef<Workspace, any>[]>(() => {
@@ -80,6 +81,7 @@ export default function WorkspaceList() {
   return (
     <>
       <DataTableWrapper
+        key={Number(workspaceTableResetKey)}
         columns={columns}
         data={workspaces}
         deleteModalContent={

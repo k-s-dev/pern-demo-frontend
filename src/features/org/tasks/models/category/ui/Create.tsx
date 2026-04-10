@@ -5,6 +5,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { categoryCreate } from "../data";
 import FormMessages from "@/lib/ui/components/form/FormMessages";
+import { useRouter } from "next/navigation";
 
 export default function CreateCategory({
   value,
@@ -21,6 +22,7 @@ export default function CreateCategory({
 }) {
   const [errors, setErrors] = useImmer<string[]>([]);
   const [resetKey, setResetKey] = useState(0);
+  const router = useRouter();
 
   async function handleAddTag() {
     const names = value.split(",");
@@ -42,6 +44,7 @@ export default function CreateCategory({
       setErrors([]);
       setResetKey((p) => p + 1);
       postAddAction();
+      router.refresh();
     });
   }
 

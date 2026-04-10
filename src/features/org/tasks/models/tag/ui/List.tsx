@@ -12,13 +12,14 @@ import { useTasksContext } from "../../../ui/hooks/TasksContext";
 import { CardHeader } from "@/lib/ui/components/card";
 import DeleteModalButton from "@/lib/ui/components/form/DeleteModal";
 import { tagDeleteMany } from "../data";
+import { useRouter } from "next/navigation";
 
 export default function TagList() {
-  const [resetKey, setResetKey] = useState(0);
   const [search, setSearch] = useState("");
   const [names, setNames] = useState("");
   const [selection, setSelection] = useImmer<string[]>([]);
   const tasksCtx = useTasksContext();
+  const router = useRouter();
 
   const tags =
     tasksCtx.state.tags.filter((tag) => {
@@ -52,6 +53,7 @@ export default function TagList() {
     const response = await tagDeleteMany(selection);
     if (response.error) notifications.show({ message: response.error.message });
     notifications.show({ message: ["Selected tags deleted successfully."] });
+    router.refresh();
     return response;
   }
 
@@ -59,11 +61,10 @@ export default function TagList() {
     setSearch("");
     setSelection([]);
     setNames("");
-    setResetKey((p) => p + 1);
   }
 
   return (
-    <Card key={resetKey} withBorder shadow="md">
+    <Card withBorder shadow="md">
       <CardHeader>
         <Flex justify={"space-between"}>
           <Title order={2} id="tags">

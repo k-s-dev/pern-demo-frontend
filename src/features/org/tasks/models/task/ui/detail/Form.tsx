@@ -20,8 +20,8 @@ export default function TaskDetailForm({
   resetAction,
 }: {
   task: TTaskIncludeAll;
+  resetAction: () => void;
   formId?: string;
-  resetAction?: () => void;
 }) {
   const formIdFinal = formId || "task-form";
   const [tagIds, setTagIds] = useState<string[]>(
@@ -44,7 +44,7 @@ export default function TaskDetailForm({
   };
 
   const [formState, formAction, isPending] = useActionState(
-    taskUpdateClientAction.bind(null, task.id, task.categoryId, tagIds),
+    taskUpdateClientAction.bind(null, task.id, tagIds, resetAction),
     initialFormState,
   );
 
@@ -117,6 +117,12 @@ export default function TaskDetailForm({
               name="priorityId"
               label="Priority"
               w={150}
+            />
+            <input
+              type="text"
+              hidden
+              name="categoryId"
+              defaultValue={task.categoryId}
             />
           </Flex>
           <Flex gap={"xs"} wrap={"wrap"}>

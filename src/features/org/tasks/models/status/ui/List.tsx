@@ -6,17 +6,18 @@ import { Updater, useImmer } from "use-immer";
 import { useState } from "react";
 import { CardHeader } from "@/lib/ui/components/card";
 import DeleteModalButton from "@/lib/ui/components/form/DeleteModal";
-import { useTasksContext } from "../../../ui/hooks/TasksContext";
 import { statusDeleteMany } from "../data";
 import { generateRandomString } from "@/lib/utils/random";
+import { TWorkspaceIncludeAll } from "@/lib/definitions/backend/org/workspace";
+import { useRouter } from "next/navigation";
 
-export default function StatusList({ workspaceId }: { workspaceId: string }) {
+export default function StatusList({
+  workspace,
+}: {
+  workspace: TWorkspaceIncludeAll;
+}) {
   const [resetKey, setResetKey] = useState(0);
   const [selectedIds, setSelectedIds] = useImmer<string[]>([]);
-  const tasksCtx = useTasksContext();
-  const workspace = tasksCtx.state.workspaces.find(
-    (workspace) => workspace.id === workspaceId,
-  );
 
   if (!workspace) {
     return null;
@@ -101,6 +102,8 @@ function DeleteSelected({
   selectedIds: string[];
   setSelectedIdsAction: Updater<string[]>;
 }) {
+  const router = useRouter();
+
   return (
     <DeleteModalButton
       triggerContent={
@@ -113,6 +116,7 @@ function DeleteSelected({
       deleteAction={async () => {
         const response = await statusDeleteMany(selectedIds);
         setSelectedIdsAction([]);
+        router.refresh();
         return response;
       }}
       disabled={selectedIds.length <= 0}

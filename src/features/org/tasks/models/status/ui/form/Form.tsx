@@ -20,6 +20,7 @@ import FormMessages from "@/lib/ui/components/form/FormMessages";
 import DeleteModalButton from "@/lib/ui/components/form/DeleteModal";
 import { TStatusFormData, TStatusFormState } from "../../definitions";
 import { statusDelete } from "../../data";
+import { useRouter } from "next/navigation";
 
 export default function StatusFormRow({
   workspace,
@@ -245,15 +246,20 @@ function ResetButton({
 }
 
 function DeleteButton({ status }: { status?: Status }) {
+  const router = useRouter();
+
   return (
     <DeleteModalButton
       deleteAction={async () => {
-        let response;
-        if (status) {
-          response = await statusDelete(status.id);
-          return response;
+        if (!status) {
+          return { error: { message: "Not found." } };
         }
-        return { error: { message: "No selection." } };
+        const response = await statusDelete(status.id);
+        if (response.error) {
+          return { error: { message: "No selection." } };
+        }
+        router.refresh();
+        return response;
       }}
       color="red"
       variant="light"

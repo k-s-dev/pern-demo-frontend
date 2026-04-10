@@ -9,8 +9,8 @@ import {
 
 export async function taskUpdateClientAction(
   id: string,
-  categoryId: string,
   tagIds: string[],
+  resetAction: () => void,
   prevState: TTaskFormState | null,
   formData: FormData,
 ): Promise<TTaskFormState> {
@@ -33,11 +33,16 @@ export async function taskUpdateClientAction(
     };
   }
 
-  return await taskUpdateServerAction(
+  const serverResponse = await taskUpdateServerAction(
     id,
-    categoryId,
     tagIds,
     prevState,
     formData,
   );
+
+  if (serverResponse.status !== "error") {
+    resetAction();
+  }
+
+  return serverResponse;
 }

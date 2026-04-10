@@ -2,7 +2,6 @@
 
 import * as v from "valibot";
 import { parseFormData, prepareValibotErrors } from "@/lib/utils/form";
-import { revalidatePath } from "next/cache";
 import { routes } from "@/lib/routes";
 import { ERROR_MESSAGES } from "@/lib/constants/index";
 import { TWorkspaceIncludeAll } from "@/lib/definitions/backend/org/workspace";
@@ -12,7 +11,8 @@ import {
   TPriorityFormState,
 } from "../../../definitions";
 import { priorityCreate, priorityUpdate } from "../../../data";
-import { redirect } from "next/navigation";
+import { redirect, RedirectType } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function priorityServerAction(
   id: string | undefined,
@@ -75,5 +75,5 @@ export async function priorityServerAction(
   }
 
   revalidatePath(routes.org.tasks.root);
-  redirect(routes.org.tasks.workspace.withId(workspace.id));
+  redirect(routes.org.tasks.workspace.withId(workspace.id), RedirectType.push);
 }

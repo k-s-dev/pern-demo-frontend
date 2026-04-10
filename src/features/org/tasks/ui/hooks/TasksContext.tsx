@@ -41,8 +41,15 @@ export function tasksReducer(draft: ITasksState, action: TTasksAction) {
   let workspaces;
 
   switch (action.type) {
+    case "reset":
+      draft.resetKey = !draft.resetKey;
+      break;
+
     case "update:state":
-      return action.data;
+      draft.workspaces = action.data.workspaces;
+      draft.tags = action.data.tags;
+      draft.tasks = action.data.tasks;
+      break;
 
     case "search:update":
       draft.search = action.search;
@@ -147,10 +154,10 @@ export function tasksReducer(draft: ITasksState, action: TTasksAction) {
   }
 }
 
-export function useProcessedTasks() {
+export function useProcessedTasks(tasks: TTaskIncludeAll[]) {
   const { state } = useTasksContext();
 
-  const filteredTasks = state.tasks.filter((task) => {
+  const filteredTasks = tasks.filter((task) => {
     const checkWorkspace =
       state.filters.workspaces.length === 0 ||
       state.filters.workspaces.includes(task.category.workspaceId);
@@ -233,6 +240,7 @@ export function useGetDefaultPriorityByCategoryId(categoryId: string) {
 }
 
 export interface ITasksState {
+  resetKey: boolean;
   user: User;
   workspaces: TWorkspaceIncludeAll[];
   tags: Tag[];
@@ -267,6 +275,7 @@ export interface ITasksContext {
 }
 
 export type TTasksAction =
+  | { type: "reset"; data: null }
   | { type: "update:state"; data: ITasksState }
   | { type: "search:update"; search: string[] | null }
   | { type: "filter:reset" }

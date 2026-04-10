@@ -1,5 +1,6 @@
 import EditTaskRow, { TaskEditRowTitle } from "./EditRow";
 import {
+  Anchor,
   Box,
   Card,
   Divider,
@@ -28,22 +29,24 @@ import {
 import { TTaskIncludeAll } from "@/lib/definitions/backend/org/task";
 import { taskDeleteMany } from "../data";
 import { Task } from "@/lib/definitions/backend/prisma/client";
+import Link from "next/link";
+import { routes } from "@/lib/routes";
 
-export default function TaskTree() {
+export default function TaskTree({ tasks }: { tasks: TTaskIncludeAll[] }) {
   const tasksCtx = useTasksContext();
-  const processedTasks = useProcessedTasks();
+  const processedTasks = useProcessedTasks(tasks);
   const [pageState, setPageState] = useImmer<IPageState>({
     itemsPerPage: 10,
     current: 1,
   });
 
-  const tasks = [] as TTaskIncludeAll[];
+  const finalTasks = [] as TTaskIncludeAll[];
 
   const [state, setState] = useImmer<TreeState>({});
 
   useEffect(() => {
     setState((draft) => {
-      tasksCtx.state.tasks.forEach((task) => {
+      tasks.forEach((task) => {
         if (!draft[task.id]) {
           draft[task.id] = {
             showChildren: false,
@@ -53,23 +56,23 @@ export default function TaskTree() {
         }
       });
     });
-  }, [setState, tasksCtx.state.tasks]);
+  }, [setState, tasks]);
 
   processedTasks.forEach((task) => {
-    addItem(tasks, task);
+    addItem(finalTasks, task);
     const parents = getAllParents(tasksCtx.state.tasks, task);
-    parents.forEach((parent) => addItem(tasks, parent));
+    parents.forEach((parent) => addItem(finalTasks, parent));
   });
 
   if (tasksCtx.state.sort.length > 0) {
     tasksCtx.state.sort.forEach((spec) => {
       if (!spec.direction) return;
-      tasks.sort(spec.fn);
+      finalTasks.sort(spec.fn);
     });
   }
 
   const rootTasks = [] as TTaskIncludeAll[];
-  tasks.forEach((task) => {
+  finalTasks.forEach((task) => {
     const rootId = getRoot(tasksCtx.state.tasks, task);
     if (!rootTasks.find((item) => item.id === rootId)) {
       const root = tasksCtx.state.tasks.find((item) => item.id === rootId);
@@ -137,6 +140,15 @@ export default function TaskTree() {
         <Text c="gray" fz={"xl"}>
           There are no tasks with current filters.
         </Text>
+        {tasksCtx.state.workspaces.length === 0 && (
+          <Text>
+            There are no workspaces yet. To configure a new workspace visit
+            <Anchor component={Link} href={routes.org.tasks.settings.root}>
+              settings
+            </Anchor>
+            page.
+          </Text>
+        )}
       </>
     );
   }
@@ -167,7 +179,7 @@ export default function TaskTree() {
             return (
               <RenderNode
                 key={task.id}
-                tasks={tasks}
+                tasks={finalTasks}
                 task={task}
                 state={state}
                 setState={setState}

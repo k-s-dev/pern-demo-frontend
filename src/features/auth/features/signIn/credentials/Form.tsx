@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@mantine/core";
 import { TSignInFormAction, TSignInFormState } from "./definitions";
 import Form from "@/lib/ui/components/form/Form";
@@ -12,12 +12,14 @@ import {
 } from "@/features/auth/lib/ui/components/Fields";
 import { useRememberMeCtx } from "@/features/auth/lib/ui/components/AuthCard";
 import { emailSignInFormClientAction } from "./actions/client.action";
+import { routes } from "@/lib/routes";
 
 export default function CredentialsSignInForm({
   initialState,
   resetAction,
   formId = "signIn-form",
 }: CredentialsSigninProps) {
+  const router = useRouter();
   const rememberMeCtx = useRememberMeCtx();
   const searchParams = useSearchParams();
   const [actionName, setActionName] = useState<TSignInFormAction | null>(null);
@@ -72,6 +74,10 @@ export default function CredentialsSignInForm({
     formState = resetFormState;
   if (verificationFormState.touched && actionName === "verify")
     formState = verificationFormState;
+
+  if (formState.status === "success") {
+    router.push(routes.DEFAULT_SIGNIN_REDIRECT);
+  }
 
   return (
     <>

@@ -20,27 +20,24 @@ export function useSessionContext() {
 }
 
 export function SessionProvider({
-  initialSessionDataPromise,
+  initialSessionData,
   children,
 }: {
-  initialSessionDataPromise: Promise<TSessionData | null> | null;
+  initialSessionData: TSessionData | null;
   children: React.ReactNode;
 }) {
-  const [sessionDataPromise, setSessionDataPromise] =
-    useState<Promise<TSessionData | null> | null>(initialSessionDataPromise);
+  const [sessionData, setSessionData] = useState<TSessionData | null>(
+    initialSessionData,
+  );
 
   return (
-    <SessionContext.Provider
-      value={{ sessionDataPromise, setSessionDataPromise }}
-    >
+    <SessionContext.Provider value={{ sessionData, setSessionData }}>
       {children}
     </SessionContext.Provider>
   );
 }
 
 export interface ISessionContext {
-  sessionDataPromise: Promise<TSessionData | null> | null;
-  setSessionDataPromise: Dispatch<
-    SetStateAction<Promise<TSessionData | null> | null>
-  >;
+  sessionData: TSessionData | null;
+  setSessionData: Dispatch<SetStateAction<TSessionData | null>>;
 }

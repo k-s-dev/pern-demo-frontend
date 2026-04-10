@@ -6,10 +6,13 @@ import { FaArrowsRotate } from "react-icons/fa6";
 import * as v from "valibot";
 import { SName } from "@/lib/definitions/backend";
 import { workspaceCreate } from "../data";
+import { useRouter } from "next/navigation";
+import { createWorkspaceServerAction } from "./createWorkspaceServerAction";
+
+type TIssue = v.InferIssue<typeof SName>;
 
 export default function AddWorkspaceQuick() {
-  type TIssue = v.InferIssue<typeof SName>;
-
+  const router = useRouter();
   const [name, setName] = useState<string>("");
   const [error, setError] = useState<TIssue[] | { message: string }[] | null>(
     null,
@@ -23,29 +26,31 @@ export default function AddWorkspaceQuick() {
 
     if (!validation.success) {
       setError(validation.issues);
+      return;
     }
 
-    if (validation.success) {
-      setError(null);
-      setName(validation.output);
-      setStatus("pending");
-      const response = await workspaceCreate({ name: validation.output });
-      if (response.error) {
-        setStatus("error");
-        setError([
-          {
-            message: response.error.message || "Failed to create workspace.",
-          },
-        ]);
-      }
-      if (!response.error) {
-        setStatus("success");
-        setTimeout(() => {
-          setStatus("untouched");
-          setName("");
-        }, 2000);
-      }
+    setError(null);
+    setName(validation.output);
+    setStatus("pending");
+
+    const response = await workspaceCreate({ name: validation.output });
+    if (response.error) {
+      setStatus("error");
+      setError([
+        {
+          message: response.error.message || "Failed to create workspace.",
+        },
+      ]);
+      return;
     }
+
+    setStatus("success");
+    setTimeout(() => {
+      setStatus("untouched");
+      setName("");
+      setError(null);
+    }, 2000);
+    router.refresh();
   }
 
   return (

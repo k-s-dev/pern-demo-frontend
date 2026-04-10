@@ -12,8 +12,7 @@ import {
 } from "../definitions";
 import { parseFormData, prepareValibotErrors } from "@/lib/utils/form";
 import { authClient } from "@/features/auth/lib/auth.client";
-import { redirect } from "next/navigation";
-import { routes } from "@/lib/routes";
+import { signInEmailServerAction } from "./server";
 
 export async function emailSignInFormClientAction(
   actionName: TSignInFormAction,
@@ -23,7 +22,9 @@ export async function emailSignInFormClientAction(
   formData: FormData,
 ): Promise<TSignInFormState> {
   setActionName(actionName);
-  const rawFormData = Object.fromEntries(formData);
+  const rawFormData = Object.fromEntries(
+    formData,
+  ) as unknown as TSignInFormStateData;
   const parsedFormData = parseFormData({
     formData,
     info: { booleans: ["rememberMe"] },
@@ -52,7 +53,7 @@ export async function emailSignInFormClientAction(
     if (response.error) {
       return {
         status: "error",
-        data: rawFormData as unknown as TSignInFormStateData,
+        data: rawFormData,
         errors: {
           root: prepareValibotErrors(
             response.error?.message || [
@@ -64,6 +65,8 @@ export async function emailSignInFormClientAction(
         touched: true,
       };
     }
+
+    await signInEmailServerAction();
   } else {
     const validationResult = v.safeParse(SSignInFormBase, parsedFormData);
 
@@ -71,7 +74,7 @@ export async function emailSignInFormClientAction(
       const errors = v.flatten<typeof SSignInFormBase>(validationResult.issues);
       return {
         status: "error",
-        data: rawFormData as unknown as TSignInFormStateData,
+        data: rawFormData,
         errors: errors,
         action: actionName,
         touched: true,
@@ -86,7 +89,7 @@ export async function emailSignInFormClientAction(
       if (response.error) {
         return {
           status: "error",
-          data: rawFormData as unknown as TSignInFormStateData,
+          data: rawFormData,
           errors: {
             root: [response.error.message || "Verification failed. Try again."],
           },
@@ -111,7 +114,7 @@ export async function emailSignInFormClientAction(
       if (response.error) {
         return {
           status: "error",
-          data: rawFormData as unknown as TSignInFormStateData,
+          data: rawFormData,
           errors: {
             root: [
               response.error.message || "Password reset failed. Try again.",
@@ -124,7 +127,7 @@ export async function emailSignInFormClientAction(
 
       return {
         status: "success",
-        data: rawFormData as unknown as TSignInFormStateData,
+        data: rawFormData,
         messages: [response.data.message],
         action: actionName,
         touched: true,
@@ -132,5 +135,10 @@ export async function emailSignInFormClientAction(
     }
   }
 
-  redirect(routes.DEFAULT_SIGNIN_REDIRECT);
+  return {
+    status: "success",
+    data: rawFormData,
+    action: actionName,
+    touched: true,
+  };
 }

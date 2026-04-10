@@ -42,6 +42,7 @@ export default function CreateTag({
           setErrors((draft) => {
             draft.push(response.error.message);
           });
+          return;
         }
 
         setValue("");

@@ -12,8 +12,6 @@ import {
   prepareError,
   TServerResponsePromise,
 } from "@/lib/definitions/serverResponse";
-import { routes } from "@/lib/routes";
-import { revalidatePath } from "next/cache";
 
 export async function tagCreate(
   body: TTagCreateDataIn,
@@ -25,14 +23,15 @@ export async function tagCreate(
     body: JSON.stringify(body),
   });
   if (response.error) return prepareError(response.error);
-  revalidatePath(routes.org.tasks.root);
   return { data: response.data };
 }
 
-export async function tagGetList(): TServerResponsePromise<TTagIncludeAll[]> {
+export async function tagGetList(
+  headersList: Headers,
+): TServerResponsePromise<TTagIncludeAll[]> {
   const url = appConfig.api.url + "/org/tag/list";
   const response = await betterFetchBase<TTagIncludeAll[]>(url, {
-    headers: await prepareHeaders(),
+    headers: headersList,
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -40,11 +39,12 @@ export async function tagGetList(): TServerResponsePromise<TTagIncludeAll[]> {
 
 export async function tagGet(
   id: string,
+  headersList: Headers,
 ): TServerResponsePromise<TTagIncludeAll> {
   const url = appConfig.api.url + "/org/tag/" + id;
   const response = await betterFetchBase<TTagIncludeAll>(url, {
     method: "get",
-    headers: await prepareHeaders(),
+    headers: headersList,
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -61,7 +61,6 @@ export async function tagUpdate(
     body: JSON.stringify(body),
   });
   if (response.error) return prepareError(response.error);
-  revalidatePath(routes.org.tasks.root);
   return { data: response.data };
 }
 
@@ -74,7 +73,6 @@ export async function tagDelete(
     headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
-  revalidatePath(routes.org.tasks.root);
   return { data: response.data };
 }
 
@@ -98,7 +96,6 @@ export async function tagDeleteMany(ids: string[]) {
       },
     };
   }
-  revalidatePath(routes.org.tasks.root);
   return {
     data: {},
     message: `${ids.length} tag[s] deleted successfully.`,

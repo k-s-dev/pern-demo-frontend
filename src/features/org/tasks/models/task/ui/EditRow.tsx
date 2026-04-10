@@ -35,6 +35,7 @@ import TooltipIcon from "@/lib/ui/components/icons/TooltipIcon";
 import DeleteModalIcon from "@/lib/ui/components/form/DeleteModalIcon";
 import FormMessages from "@/lib/ui/components/form/FormMessages";
 import { TServerResponsePromise } from "@/lib/definitions/serverResponse";
+import { useRouter } from "next/navigation";
 
 const GRID_COLUMNS = "25px 200px 60px 60px 120px 40px 100px";
 
@@ -64,6 +65,7 @@ export default function EditTaskRow({
   const [data, setData] = useImmer<TTaskIncludeAll>(task);
   const [errors, setErrors] = useImmer<string[]>([]);
   const tasksCtx = useTasksContext();
+  const router = useRouter();
 
   const workspace = tasksCtx.state.workspaces.find(
     (el) => el.id === task.category.workspaceId,
@@ -77,6 +79,8 @@ export default function EditTaskRow({
         draft.push(response.error.message);
       });
     }
+
+    router.refresh();
   }
 
   async function handleDelete() {
@@ -89,6 +93,7 @@ export default function EditTaskRow({
     }
 
     deleteSelectionAction();
+    router.refresh();
 
     return response;
   }

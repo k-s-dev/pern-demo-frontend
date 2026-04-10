@@ -23,6 +23,7 @@ import { CardHeader } from "@/lib/ui/components/card";
 import FormMessages from "@/lib/ui/components/form/FormMessages";
 import * as v from "valibot";
 import { STaskFieldName } from "@/lib/definitions/backend/org/task";
+import { useRouter } from "next/navigation";
 
 export default function TaskQuickCreate({
   parentId,
@@ -35,6 +36,7 @@ export default function TaskQuickCreate({
   const [errors, setErrors] = useImmer<string[]>([]);
   const [resetKey, setResetKey] = useState(0);
   const tasksCtx = useTasksContext();
+  const router = useRouter();
 
   const parent = tasksCtx.state.tasks.find((el) => el.id === parentId);
 
@@ -89,7 +91,6 @@ export default function TaskQuickCreate({
       setErrors((draft) => {
         draft.push(ERROR_MESSAGES.internalServer);
       });
-
       return;
     }
 
@@ -111,6 +112,7 @@ export default function TaskQuickCreate({
     setErrors([]);
     setResetKey((p) => p + 1);
     postAddAction();
+    router.refresh();
   }
 
   if (

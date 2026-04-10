@@ -10,7 +10,7 @@ export default async function layout({
   const session = await getSession();
 
   if (session) {
-    redirect(routes.DEFAULT_SIGNIN_REDIRECT);
+    return redirect(routes.DEFAULT_SIGNIN_REDIRECT);
   }
 
   return <>{children}</>;

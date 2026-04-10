@@ -1,7 +1,9 @@
+import { Suspense } from "react";
 import styles from "./Navbar.module.scss";
 import NavUser from "./NavUser";
 import { NavLinks, NavLinksPhone } from "./NoSsrComponents";
 import NavThemeToggle from "./theme/NavThemeToggle";
+import { Skeleton } from "@mantine/core";
 
 export default async function Navbar() {
   return (
@@ -37,7 +39,9 @@ export async function NavPhone() {
         <div className={styles.wrapper}>
           <NavLinksPhone />
           <NavThemeToggle />
-          <NavUser />
+          <Suspense fallback={<Skeleton circle h={30} w={30} />}>
+            <NavUser />
+          </Suspense>
         </div>
       </section>
     </>
@@ -58,7 +62,9 @@ function NavRight() {
   return (
     <>
       <NavThemeToggle />
-      <NavUser />
+      <Suspense fallback={<Skeleton circle h={30} w={30} />}>
+        <NavUser />
+      </Suspense>
     </>
   );
 }

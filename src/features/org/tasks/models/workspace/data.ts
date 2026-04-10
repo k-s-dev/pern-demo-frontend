@@ -12,8 +12,6 @@ import {
   prepareError,
   TServerResponsePromise,
 } from "@/lib/definitions/serverResponse";
-import { routes } from "@/lib/routes";
-import { revalidatePath } from "next/cache";
 
 export async function workspaceCreate(
   body: TWorkspaceCreateDataIn,
@@ -25,16 +23,15 @@ export async function workspaceCreate(
     body: JSON.stringify(body),
   });
   if (response.error) return prepareError(response.error);
-  revalidatePath(routes.org.tasks.root);
   return { data: response.data };
 }
 
-export async function workspaceGetList(): TServerResponsePromise<
-  TWorkspaceIncludeAll[]
-> {
+export async function workspaceGetList(
+  headersList: Headers,
+): TServerResponsePromise<TWorkspaceIncludeAll[]> {
   const url = appConfig.api.url + "/org/workspace/list";
   const response = await betterFetchBase<TWorkspaceIncludeAll[]>(url, {
-    headers: await prepareHeaders(),
+    headers: headersList,
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -42,11 +39,12 @@ export async function workspaceGetList(): TServerResponsePromise<
 
 export async function workspaceGet(
   id: string,
+  headersList: Headers,
 ): TServerResponsePromise<TWorkspaceIncludeAll> {
   const url = appConfig.api.url + "/org/workspace/" + id;
   const response = await betterFetchBase<TWorkspaceIncludeAll>(url, {
     method: "get",
-    headers: await prepareHeaders(),
+    headers: headersList,
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -63,7 +61,6 @@ export async function workspaceUpdate(
     body: JSON.stringify(body),
   });
   if (response.error) return prepareError(response.error);
-  revalidatePath(routes.org.tasks.root);
   return { data: response.data };
 }
 
@@ -76,7 +73,6 @@ export async function workspaceDelete(
     headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
-  revalidatePath(routes.org.tasks.root);
   return { data: response.data };
 }
 
@@ -100,7 +96,6 @@ export async function workspaceDeleteMany(ids: string[]) {
       },
     };
   }
-  revalidatePath(routes.org.tasks.root);
   return {
     data: {},
     message: `${ids.length} workspace[s] deleted successfully.`,
