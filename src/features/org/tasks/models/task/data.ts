@@ -26,12 +26,10 @@ export async function taskCreate(
   return { data: response.data };
 }
 
-export async function taskGetList(
-  headersList: Headers,
-): TServerResponsePromise<TTaskIncludeAll[]> {
+export async function taskGetList(): TServerResponsePromise<TTaskIncludeAll[]> {
   const url = appConfig.api.url + "/org/task/list";
   const response = await betterFetchBase<TTaskIncludeAll[]>(url, {
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -39,12 +37,11 @@ export async function taskGetList(
 
 export async function taskGet(
   id: string,
-  headersList: Headers,
 ): TServerResponsePromise<TTaskIncludeAll> {
   const url = appConfig.api.url + "/org/task/" + id;
   const response = await betterFetchBase<TTaskIncludeAll>(url, {
     method: "get",
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };

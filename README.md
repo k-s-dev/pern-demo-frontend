@@ -35,12 +35,6 @@
     - Timer
     - Counter
 
-## Roadmap
-
-- [ ] review and finalize tree tables compatibility with Nextjs cache components
-- [ ] Tanstack table not functioning with latest react version
-  - if fix is not implemented move to custom grid based table
-
 ## Workflow
 
 ### Pre build check list

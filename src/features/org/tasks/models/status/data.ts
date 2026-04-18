@@ -26,12 +26,12 @@ export async function statusCreate(
   return { data: response.data };
 }
 
-export async function statusGetList(
-  headersList: Headers,
-): TServerResponsePromise<TStatusIncludeAll[]> {
+export async function statusGetList(): TServerResponsePromise<
+  TStatusIncludeAll[]
+> {
   const url = appConfig.api.url + "/org/status/list";
   const response = await betterFetchBase<TStatusIncludeAll[]>(url, {
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -39,12 +39,11 @@ export async function statusGetList(
 
 export async function statusGet(
   id: string,
-  headersList: Headers,
 ): TServerResponsePromise<TStatusIncludeAll> {
   const url = appConfig.api.url + "/org/status/" + id;
   const response = await betterFetchBase<TStatusIncludeAll>(url, {
     method: "get",
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };

@@ -26,27 +26,24 @@ export async function priorityCreate(
   return { data: response.data };
 }
 
-export async function priorityGetList(
-  headersList: Headers,
-): TServerResponsePromise<TPriorityIncludeAll[]> {
+export async function priorityGetList(): TServerResponsePromise<
+  TPriorityIncludeAll[]
+> {
   const url = appConfig.api.url + "/org/priority/list";
   const response = await betterFetchBase<TPriorityIncludeAll[]>(url, {
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
-  // TODO: remove console.log, for debug only
-  console.log("priorityGetList: " + response.data.length);
   return { data: response.data };
 }
 
 export async function priorityGet(
   id: string,
-  headersList: Headers,
 ): TServerResponsePromise<TPriorityIncludeAll> {
   const url = appConfig.api.url + "/org/priority/" + id;
   const response = await betterFetchBase<TPriorityIncludeAll>(url, {
     method: "get",
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };

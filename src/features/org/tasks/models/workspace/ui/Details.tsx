@@ -1,7 +1,6 @@
 "use client";
 
-import { Blockquote, Flex, Paper, SimpleGrid, Text } from "@mantine/core";
-import { FaCircleExclamation } from "react-icons/fa6";
+import { Flex, SimpleGrid } from "@mantine/core";
 import WorkspaceEditForm from "./edit/WorkspaceEditForm";
 import CategoryList from "../../category/ui/List";
 import PriorityList from "../../priority/ui/List";
@@ -13,21 +12,9 @@ export default function WorkspaceDetails({
 }: {
   workspace: TWorkspaceIncludeAll;
 }) {
-  if (!workspace) {
-    return (
-      <Flex justify={"center"} align={"center"} mt={"xl"}>
-        <Paper shadow="md">
-          <Blockquote color="red" icon={<FaCircleExclamation />}>
-            <Text>Workspace not found.</Text>
-          </Blockquote>
-        </Paper>
-      </Flex>
-    );
-  }
-
   return (
     <Flex direction={"column"} gap={"md"}>
-      <WorkspaceEditForm id={workspace.id} />
+      <WorkspaceEditForm workspace={workspace} />
       <SimpleGrid cols={{ base: 1, md: 2 }}>
         <CategoryList workspace={workspace} />
       </SimpleGrid>

@@ -9,7 +9,7 @@
 .root {
   @include media-phone {
     display: grid;
-    height: 100vh;
+    height: calc(100vh - $nav-height);
     grid-template-columns: 1fr;
     grid-template-areas:
       "toggle"

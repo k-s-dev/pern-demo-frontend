@@ -7,7 +7,6 @@ import * as v from "valibot";
 import { SName } from "@/lib/definitions/backend";
 import { workspaceCreate } from "../data";
 import { useRouter } from "next/navigation";
-import { createWorkspaceServerAction } from "./createWorkspaceServerAction";
 
 type TIssue = v.InferIssue<typeof SName>;
 

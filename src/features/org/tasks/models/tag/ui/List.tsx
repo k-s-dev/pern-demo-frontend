@@ -8,21 +8,24 @@ import SearchTag from "./Search";
 import { useImmer } from "use-immer";
 import { notifications } from "@mantine/notifications";
 import { FaArrowsRotate } from "react-icons/fa6";
-import { useTasksContext } from "../../../ui/hooks/TasksContext";
 import { CardHeader } from "@/lib/ui/components/card";
 import DeleteModalButton from "@/lib/ui/components/form/DeleteModal";
 import { tagDeleteMany } from "../data";
 import { useRouter } from "next/navigation";
+import { TTagIncludeAll } from "@/lib/definitions/backend/org/tag";
 
-export default function TagList() {
+export default function TagList({
+  initialData,
+}: {
+  initialData: TTagIncludeAll[];
+}) {
   const [search, setSearch] = useState("");
   const [names, setNames] = useState("");
   const [selection, setSelection] = useImmer<string[]>([]);
-  const tasksCtx = useTasksContext();
   const router = useRouter();
 
   const tags =
-    tasksCtx.state.tags.filter((tag) => {
+    initialData.filter((tag) => {
       if (search === "") return true;
       for (const pattern of search.split(",")) {
         return tag.name.includes(pattern);

@@ -18,17 +18,17 @@ export function useTasksContext() {
 }
 
 export function TasksProvider({
-  stateData,
+  initialData,
   children,
 }: {
-  stateData: ITasksState;
+  initialData: ITasksState;
   children: React.ReactNode;
 }) {
-  const [state, dispatch] = useImmerReducer(tasksReducer, stateData);
+  const [state, dispatch] = useImmerReducer(tasksReducer, initialData);
 
   useEffect(() => {
-    dispatch({ type: "update:state", data: stateData });
-  }, [dispatch, stateData]);
+    dispatch({ type: "update:state", data: initialData });
+  }, [dispatch, initialData]);
 
   return (
     <TasksContext.Provider value={{ state, dispatch }}>

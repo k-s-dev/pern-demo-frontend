@@ -6,11 +6,6 @@ export class AppError extends Error {
    * @param log - internal message to log/debug etc.
    * @param cause - original error
    * @returns custom Error object
-   *
-   * @example
-   * ```
-   * TODO: Write me later.
-   * ```
    */
 
   log?: ErrorLog;

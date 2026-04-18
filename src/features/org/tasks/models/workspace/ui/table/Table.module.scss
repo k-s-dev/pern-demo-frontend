@@ -1,0 +1,12 @@
+@use "sass:map";
+
+@use "@/lib/ui/styles/abstracts/" as *;
+
+.formContainer,
+.headerContainer {
+  display: grid;
+  gap: fn-space(2);
+  align-items: center;
+  min-width: 600px;
+}
+

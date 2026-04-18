@@ -11,7 +11,6 @@ import {
   TCategoryWithChildren,
 } from "../../definitions";
 import { categoryGet, categoryUpdate } from "../../data";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function categoryUpdateServerAction(
@@ -48,8 +47,7 @@ export async function categoryUpdateServerAction(
 
   // prepare form data for submission to backend
   let response;
-  const headersList = await headers();
-  response = await categoryGet(category.id, headersList);
+  response = await categoryGet(category.id);
 
   if (response.error) {
     return {

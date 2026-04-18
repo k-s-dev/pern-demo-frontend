@@ -83,8 +83,7 @@ export async function updateProfileServerAction(
         image: imageUploadUrl,
       },
     });
-  } catch (error) {
-    console.log(error);
+  } catch {
     return {
       data: rawFormData as TProfileFormStateData,
       status: "error",

@@ -1,7 +1,6 @@
 "use client";
 
 import { NavLink, Text } from "@mantine/core";
-import Link from "next/link";
 import { useState } from "react";
 
 export default function SidebarNavLinks() {
@@ -13,7 +12,7 @@ export default function SidebarNavLinks() {
         component="div"
         color="blue"
         label={
-          <Link
+          <a
             href={`#${links[0]}`}
             onClick={(e) => {
               setActive(links[0]);
@@ -23,7 +22,7 @@ export default function SidebarNavLinks() {
             <Text component="span" fz={"h3"}>
               {`${links[0][0].toUpperCase()}${links[0].slice(1)}`}
             </Text>
-          </Link>
+          </a>
         }
         active={active === links[0]}
         onClick={() => setActive(links[0])}
@@ -33,7 +32,6 @@ export default function SidebarNavLinks() {
           <NavLink
             key={idx}
             color="blue"
-            component={Link}
             href={`#${link}`}
             label={
               <Text component="span" fz={"h4"}>

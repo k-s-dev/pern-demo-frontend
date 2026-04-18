@@ -12,13 +12,15 @@ import { routes } from "@/lib/routes";
 import { Workspace } from "@/lib/definitions/backend/prisma/client";
 import { DataTableWrapper } from "@/lib/ui/table/DataTable";
 import DeleteModalButton from "@/lib/ui/components/form/DeleteModal";
-import { useTasksContext } from "../../../ui/hooks/TasksContext";
 import { workspaceDelete, workspaceDeleteMany } from "../data";
+import { TWorkspaceIncludeAll } from "@/lib/definitions/backend/org/workspace";
 
-export default function WorkspaceList() {
-  const tasksCtx = useTasksContext();
-  const workspaces = tasksCtx.state.workspaces;
-  const [workspaceTableResetKey, setWorkspaceTableResetKey] = useState(true);
+export default function WorkspaceList({
+  initialData,
+}: {
+  initialData: TWorkspaceIncludeAll[];
+}) {
+  const [workspaceTableResetKey] = useState(true);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columns = useMemo<ColumnDef<Workspace, any>[]>(() => {
@@ -83,7 +85,7 @@ export default function WorkspaceList() {
       <DataTableWrapper
         key={Number(workspaceTableResetKey)}
         columns={columns}
-        data={workspaces}
+        data={initialData}
         deleteModalContent={
           <>
             <Text c={"red"} fz={"h3"} mb={"md"}>

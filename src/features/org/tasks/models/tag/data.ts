@@ -26,12 +26,10 @@ export async function tagCreate(
   return { data: response.data };
 }
 
-export async function tagGetList(
-  headersList: Headers,
-): TServerResponsePromise<TTagIncludeAll[]> {
+export async function tagGetList(): TServerResponsePromise<TTagIncludeAll[]> {
   const url = appConfig.api.url + "/org/tag/list";
   const response = await betterFetchBase<TTagIncludeAll[]>(url, {
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -39,12 +37,11 @@ export async function tagGetList(
 
 export async function tagGet(
   id: string,
-  headersList: Headers,
 ): TServerResponsePromise<TTagIncludeAll> {
   const url = appConfig.api.url + "/org/tag/" + id;
   const response = await betterFetchBase<TTagIncludeAll>(url, {
     method: "get",
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };

@@ -22,8 +22,6 @@ export default function Features() {
         <OrgFeatureTaskCard />
         <OrgFeatureTimerCard />
         <OrgFeatureCounterCard />
-        <OrgFeatureMoreCard />
-        {/* <OrgFeatureCalendarCard /> */}
       </section>
     </>
   );

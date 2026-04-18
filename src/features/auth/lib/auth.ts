@@ -62,14 +62,22 @@ export const auth = betterAuth({
   },
   advanced: {
     crossSubDomainCookies: {
-      enabled: true,
+      enabled: false,
     },
-    defaultCookieAttributes: {
-      sameSite: "None",
-      secure: true,
-      httpOnly: true,
-      partitioned: false,
-    },
+    defaultCookieAttributes:
+      appConfig.nodeEnv === "development"
+        ? {
+            sameSite: "Lax",
+            secure: false,
+            httpOnly: false,
+            partitioned: false,
+          }
+        : {
+            sameSite: "None",
+            secure: true,
+            httpOnly: true,
+            partitioned: false,
+          },
   },
   onAPIError: {
     errorURL: routes.auth.error,

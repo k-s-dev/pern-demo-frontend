@@ -2,12 +2,11 @@
 
 import { Button, Card, Flex, Text, Title, Tooltip } from "@mantine/core";
 import { Updater, useImmer } from "use-immer";
-import { useState } from "react";
+import { useId, useState } from "react";
 import PriorityFormRow, { PriorityFormHeader } from "./form/Form";
 import { CardHeader } from "@/lib/ui/components/card";
 import DeleteModalButton from "@/lib/ui/components/form/DeleteModal";
 import { priorityDeleteMany } from "../data";
-import { generateRandomString } from "@/lib/utils/random";
 import { useRouter } from "next/navigation";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { TWorkspaceIncludeAll } from "@/lib/definitions/backend/org/workspace";
@@ -17,6 +16,7 @@ export default function PriorityList({
 }: {
   workspace: TWorkspaceIncludeAll;
 }) {
+  const randomFormId = useId();
   const [resetKey, setResetKey] = useState(0);
   const [selectedIds, setSelectedIds] = useImmer<string[]>([]);
   const router = useRouter();
@@ -90,7 +90,7 @@ export default function PriorityList({
           <PriorityFormRow
             mode="create"
             workspace={workspace}
-            randomFormId={generateRandomString()}
+            randomFormId={randomFormId}
             selectedIds={selectedIds}
             setSelectedIdsAction={setSelectedIds}
           />

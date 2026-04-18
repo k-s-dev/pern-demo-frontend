@@ -3,11 +3,10 @@
 import { Button, Card, Flex, Text, Title, Tooltip } from "@mantine/core";
 import StatusFormRow, { StatusFormHeader } from "./form/Form";
 import { Updater, useImmer } from "use-immer";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { CardHeader } from "@/lib/ui/components/card";
 import DeleteModalButton from "@/lib/ui/components/form/DeleteModal";
 import { statusDeleteMany } from "../data";
-import { generateRandomString } from "@/lib/utils/random";
 import { TWorkspaceIncludeAll } from "@/lib/definitions/backend/org/workspace";
 import { useRouter } from "next/navigation";
 
@@ -16,6 +15,7 @@ export default function StatusList({
 }: {
   workspace: TWorkspaceIncludeAll;
 }) {
+  const randomFormId = useId();
   const [resetKey, setResetKey] = useState(0);
   const [selectedIds, setSelectedIds] = useImmer<string[]>([]);
 
@@ -85,7 +85,7 @@ export default function StatusList({
           <StatusFormRow
             mode="create"
             workspace={workspace}
-            randomFormId={generateRandomString()}
+            randomFormId={randomFormId}
             selectedIds={selectedIds}
             setSelectedIdsAction={setSelectedIds}
           />

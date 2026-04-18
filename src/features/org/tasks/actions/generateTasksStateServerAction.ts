@@ -1,7 +1,6 @@
 "use server";
 
 import { getSession } from "@/features/auth/lib/getSession";
-import { prepareHeaders } from "@/lib/data/prepareHeaders";
 import { workspaceGetList } from "../models/workspace/data";
 import { tagGetList } from "../models/tag/data";
 import { taskGetList } from "../models/task/data";
@@ -11,11 +10,10 @@ import { ITasksState } from "../ui/hooks/TasksContext";
 import { TSessionUser } from "@/lib/definitions/backend/auth/user";
 
 export async function generateTasksStateServerAction() {
-  const headersList = await prepareHeaders();
   const sessionData = await getSession();
-  const workspaceResponse = await workspaceGetList(headersList);
-  const tagResponse = await tagGetList(headersList);
-  const taskResponse = await taskGetList(headersList);
+  const workspaceResponse = await workspaceGetList();
+  const tagResponse = await tagGetList();
+  const taskResponse = await taskGetList();
 
   if (!sessionData || !sessionData.user) {
     redirect(routes.auth.signIn);

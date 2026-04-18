@@ -12,9 +12,9 @@ export default function Layout03({ children }: { children: ReactNode }) {
     <Box
       component="main"
       h={"100%"}
-      pb={"xl"}
-      style={{ overflow: "auto" }}
       mx={"auto"}
+      pb={"md"}
+      style={{ overflow: "auto" }}
     >
       {children}
     </Box>

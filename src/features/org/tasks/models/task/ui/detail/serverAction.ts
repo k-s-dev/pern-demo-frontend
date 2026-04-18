@@ -10,7 +10,6 @@ import {
   TTaskFormState,
 } from "../../definitions";
 import { taskGet, taskUpdate } from "../../data";
-import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -46,8 +45,7 @@ export async function taskUpdateServerAction(
   const validatedData = validationResult.output;
 
   // prepare form data for submission to backend
-  const headersList = await headers();
-  const response = await taskGet(id, headersList);
+  const response = await taskGet(id);
 
   if (response.error) {
     return {

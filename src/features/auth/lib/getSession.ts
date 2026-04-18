@@ -5,9 +5,9 @@ import { auth } from "./auth";
 import { TSessionData } from "@/lib/definitions/backend/auth/generic";
 
 export async function getSession() {
+  const headersList = new Headers(await headers());
   const response = await auth.api.getSession({
-    headers: await headers(),
+    headers: headersList,
   });
-  // TODO:HACK:REVIEW review type cast with better-auth
-  return response as unknown as TSessionData | null;
+  return response as TSessionData | null;
 }

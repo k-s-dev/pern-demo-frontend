@@ -26,12 +26,12 @@ export async function categoryCreate(
   return { data: response.data };
 }
 
-export async function categoryGetList(
-  headersList: Headers,
-): TServerResponsePromise<TCategoryIncludeAll[]> {
+export async function categoryGetList(): TServerResponsePromise<
+  TCategoryIncludeAll[]
+> {
   const url = appConfig.api.url + "/org/category/list";
   const response = await betterFetchBase<TCategoryIncludeAll[]>(url, {
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -39,12 +39,11 @@ export async function categoryGetList(
 
 export async function categoryGet(
   id: string,
-  headersList: Headers,
 ): TServerResponsePromise<TCategoryIncludeAll> {
   const url = appConfig.api.url + "/org/category/" + id;
   const response = await betterFetchBase<TCategoryIncludeAll>(url, {
     method: "get",
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };

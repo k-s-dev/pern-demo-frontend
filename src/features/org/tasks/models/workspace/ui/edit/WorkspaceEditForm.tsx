@@ -6,34 +6,26 @@ import { workspaceUpdateClientAction } from "./clientAction";
 import { FaArrowsRotate } from "react-icons/fa6";
 import { InputText } from "@/lib/ui/components/form/fields/InputText";
 import { RichTextInput } from "@/lib/ui/components/form/fields/RichTextInput";
-import { useTasksContext } from "@/features/org/tasks/ui/hooks/TasksContext";
 import { TWorkspaceFormData, TWorkspaceFormState } from "../../definitions";
+import { TWorkspaceIncludeAll } from "@/lib/definitions/backend/org/workspace";
 
 export default function WorkspaceEditForm({
-  id,
+  workspace,
   formId,
 }: {
-  id: string;
+  workspace: TWorkspaceIncludeAll;
   formId?: string;
 }) {
   const formIdFinal = formId || "workspace-form";
-  const tasksCtx = useTasksContext();
-  const workspace = tasksCtx.state.workspaces.filter((workspace) => {
-    return workspace.id === id;
-  })[0];
 
   const initialFormState: TWorkspaceFormState = {
-    data: { ...workspace } as TWorkspaceFormData,
+    data: workspace as TWorkspaceFormData,
   };
 
   const [formState, formAction, isPending] = useActionState(
-    workspaceUpdateClientAction.bind(null, id),
+    workspaceUpdateClientAction.bind(null, workspace.id),
     initialFormState,
   );
-
-  if (!workspace) {
-    return null;
-  }
 
   return (
     <div>

@@ -26,12 +26,12 @@ export async function workspaceCreate(
   return { data: response.data };
 }
 
-export async function workspaceGetList(
-  headersList: Headers,
-): TServerResponsePromise<TWorkspaceIncludeAll[]> {
+export async function workspaceGetList(): TServerResponsePromise<
+  TWorkspaceIncludeAll[]
+> {
   const url = appConfig.api.url + "/org/workspace/list";
   const response = await betterFetchBase<TWorkspaceIncludeAll[]>(url, {
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
@@ -39,12 +39,11 @@ export async function workspaceGetList(
 
 export async function workspaceGet(
   id: string,
-  headersList: Headers,
 ): TServerResponsePromise<TWorkspaceIncludeAll> {
   const url = appConfig.api.url + "/org/workspace/" + id;
   const response = await betterFetchBase<TWorkspaceIncludeAll>(url, {
     method: "get",
-    headers: headersList,
+    headers: await prepareHeaders(),
   });
   if (response.error) return prepareError(response.error);
   return { data: response.data };
