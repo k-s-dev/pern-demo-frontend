@@ -75,10 +75,6 @@ export default function CredentialsSignInForm({
   if (verificationFormState.touched && actionName === "verify")
     formState = verificationFormState;
 
-  if (formState.status === "success") {
-    router.push(routes.DEFAULT_SIGNIN_REDIRECT);
-  }
-
   return (
     <>
       <Form id={formId} noValidate>

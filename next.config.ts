@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   cacheComponents: true,
   allowedDevOrigins: ["192.168.1.5", "192.168.1.2"],
+  serverExternalPackages: ["pino", "pino-pretty"],
   experimental: {
     serverComponentsHmrCache: false,
     globalNotFound: true,
