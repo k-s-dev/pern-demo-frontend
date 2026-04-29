@@ -37,7 +37,7 @@ export function renderNavLinks({
           key={key}
           link={link}
           className={className}
-          close={closeAction}
+          closeAction={closeAction}
         />
       );
     }
@@ -88,7 +88,8 @@ export function NavLinkLeafMenuItem({ link, className }: TNavLinkProps) {
 export function NavLinkLeaf({
   link,
   className,
-}: { close?: () => void } & TNavLinkProps) {
+  closeAction,
+}: { closeAction: () => void } & TNavLinkProps) {
   return (
     <NavLink
       component={Link}
@@ -99,7 +100,7 @@ export function NavLinkLeaf({
           {link.title}
         </Text>
       }
-      onClick={close}
+      onClick={closeAction}
     />
   );
 }
@@ -109,7 +110,7 @@ export function NavLinkBaseRoot({
   classNames,
   pathname,
   screen = "phone-up",
-  closeAction: close,
+  closeAction,
 }: TRenderNavLinksProps) {
   const className = clsx(
     classNames.base,
@@ -148,7 +149,7 @@ export function NavLinkBaseRoot({
               pathname,
               screen,
               root: false,
-              closeAction: close,
+              closeAction,
             });
           })}
       </MenuDropdown>
@@ -161,7 +162,7 @@ export function NavLinkBase({
   classNames,
   pathname,
   screen = "phone-up",
-  closeAction: close,
+  closeAction,
 }: TRenderNavLinksProps) {
   const className = clsx(
     classNames.base,
@@ -189,7 +190,7 @@ export function NavLinkBase({
             {link.title}
           </Text>
         }
-        onClick={close}
+        onClick={closeAction}
         className={className}
       />
       {link.links &&
@@ -200,7 +201,7 @@ export function NavLinkBase({
             pathname,
             screen,
             root: false,
-            closeAction: close,
+            closeAction,
           });
         })}
     </NavLink>
@@ -218,5 +219,5 @@ export type TRenderNavLinksProps = {
   pathname: string;
   screen: "phone" | "phone-up";
   root?: boolean;
-  closeAction?: () => void;
+  closeAction: () => void;
 };

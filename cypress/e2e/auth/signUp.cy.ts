@@ -19,6 +19,7 @@ describe("SignUp flow", () => {
     cy.getByData("signUp-confirmPassword").type("12345678@Ab");
     cy.getByData("signUp-name").type("user 04");
     cy.getByData("signUp-btn").click();
+    cy.wait(1000);
     cy.getByData("signUp-success-message").should("be.visible");
   });
 

@@ -32,6 +32,7 @@ export default function NavLinks() {
           classNames: { base: styles.link, active: styles.active },
           pathname,
           screen: "phone-up",
+          closeAction: () => {},
         });
       })}
     </>

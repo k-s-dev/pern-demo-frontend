@@ -20,6 +20,7 @@ export default function NavLinks() {
           link,
           classNames: { base: styles.link, active: styles.active },
           pathname,
+          closeAction: () => {},
           screen: "phone-up",
         });
       })}

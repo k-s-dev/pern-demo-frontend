@@ -6,31 +6,34 @@ import { navLinks } from "./NavLinks";
 import { usePathname } from "next/navigation";
 import { useDisclosure } from "@mantine/hooks";
 import { renderNavLinks } from "./renderNavLinks";
-import { mantineTheme } from "../../mantine.theme";
 import { INavLink } from "./definitions";
 import { routes } from "@/lib/routes";
+import { FaBars } from "react-icons/fa6";
+import { mantineTheme } from "../../mantine.theme";
 
 export default function NavLinksPhone() {
   const pathname = usePathname();
-  const [opened, { open, close }] = useDisclosure(false);
+  const [opened, { close, toggle }] = useDisclosure(false);
 
   return (
     <>
-      <Modal key={pathname} opened={opened} onClose={close} title="Nav">
+      <Modal opened={opened} onClose={close} title="Nav">
         {/* Modal content */}
-        {navLinksPhone.map((link) => {
-          return renderNavLinks({
-            link,
-            classNames: { base: styles.link, active: styles.active },
-            pathname,
-            screen: "phone",
-            root: false,
-            closeAction: close,
-          });
-        })}
+        {opened &&
+          navLinksPhone.map((link) => {
+            return renderNavLinks({
+              link,
+              classNames: { base: styles.link, active: styles.active },
+              pathname,
+              screen: "phone",
+              root: false,
+              closeAction: close,
+            });
+          })}
       </Modal>
 
-      <Title order={6} size="h1" onClick={open}>
+      <FaBars onClick={toggle} />
+      <Title order={6} size="h1" onClick={toggle}>
         Next
         <span style={{ color: mantineTheme.colors.green[5] }}>Demo</span>
       </Title>
